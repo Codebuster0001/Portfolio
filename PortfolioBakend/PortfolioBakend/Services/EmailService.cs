@@ -17,13 +17,12 @@ namespace PortfolioBakend.Services
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<EmailService> _logger;
-        private static readonly HttpClient _httpClient = new HttpClient();
+        private static readonly HttpClient _httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(15) };
 
         public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
             _configuration = configuration;
             _logger = logger;
-            _httpClient.Timeout = TimeSpan.FromSeconds(15); // Fail fast so the UI doesn't hang
         }
 
         public async Task<bool> SendEmailAsync(string to, string subject, string htmlMessage)
