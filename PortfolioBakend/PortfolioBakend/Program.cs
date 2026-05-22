@@ -209,6 +209,7 @@ app.UseOutputCache();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGet("/", () => Results.Ok(new { status = "API is running", timestamp = DateTime.UtcNow }));
 app.MapControllers();
 
 app.Run();
