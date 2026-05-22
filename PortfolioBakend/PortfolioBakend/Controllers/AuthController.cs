@@ -32,9 +32,9 @@ namespace PortfolioBakend.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var email = request.Email;
+            var email = request.Email?.Trim();
             var password = request.Password;
-            var query = "SELECT * FROM users WHERE email = @Email";
+            var query = "SELECT * FROM users WHERE LOWER(email) = LOWER(@Email)";
 
             var dt = await _db.ExecuteQueryAsync(query, new[]
             {
@@ -60,8 +60,8 @@ namespace PortfolioBakend.Controllers
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
-            var email = request.Email;
-            var query = "SELECT * FROM users WHERE email = @Email";
+            var email = request.Email?.Trim();
+            var query = "SELECT * FROM users WHERE LOWER(email) = LOWER(@Email)";
 
             var dt = await _db.ExecuteQueryAsync(query, new[]
             {
