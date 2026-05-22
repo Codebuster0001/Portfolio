@@ -1,0 +1,37 @@
+# Directories
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# IDE and Editor files
+.vscode/
+.vs/
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+
+# Publish and Deploy
+[Pp]ublish/
+*.Publish.xml
+
+# Config and Secrets
+appsettings.Development.json
+appsettings.Production.json
+.env
+secrets.json
+
+# Cache
+.cache/
+.nuget/
+
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+*.cache

@@ -1,0 +1,192 @@
+export const projectsData = [
+  {
+    id: 1,
+    title: 'E-Commerce Platform',
+    desc: 'A full-stack e-commerce solution built for high-performance and scalability. Features a custom admin dashboard, Stripe integration for payments, and an algorithmic recommendation engine.',
+    tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2023-11-15',
+    features: [
+      'Advanced recommendation engine based on user history',
+      'Secure payment processing with Stripe (cards, apple pay, etc)',
+      'Rich multi-vendor management dashboard with analytics',
+      'Dynamic search, filters, and real-time inventory checks'
+    ]
+  },
+  {
+    id: 2,
+    title: 'Task Management App',
+    desc: 'A real-time, drag-and-drop task manager inspired by Trello. Uses WebSockets for live collaboration, ensuring all connected users see updates instantly.',
+    tech: ['Next.js', 'Tailwind', 'Prisma', 'Socket.io'],
+    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2023-08-22',
+    features: [
+      'Real-time multi-user task sync and drag-and-drop actions',
+      'Interactive boards, lists, cards, and custom labels',
+      'Robust activity logs and audit trails for team accountability',
+      'Secure JWT-based workspace-level authorization'
+    ]
+  },
+  {
+    id: 3,
+    title: 'Real Estate Portal',
+    desc: 'A comprehensive property listing platform allowing users to search, filter, and save favorite properties. Includes an interactive map view built with Mapbox.',
+    tech: ['Vue.js', 'Firebase', 'Tailwind', 'Mapbox'],
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2023-05-10',
+    features: [
+      'Seamless Mapbox integration showing dynamic property pins',
+      'Highly custom multi-layered filtering criteria',
+      'Instant chat system with listed brokers and sellers',
+      'Saved lists and automated email notifications for price drops'
+    ]
+  },
+  {
+    id: 4,
+    title: 'Fitness Tracker API',
+    desc: 'A robust RESTful API for tracking workouts, nutrition, and personal health metrics. Fully documented using Swagger and secured with JWT authentication.',
+    tech: ['Express', 'PostgreSQL', 'Swagger', 'JWT'],
+    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2023-01-30',
+    features: [
+      'Extensive REST architecture with deep relational schema',
+      'Built-in calorie breakdown and target calculation routines',
+      'Detailed API documentation using Swagger UI',
+      'High-performance indexes and query optimizations on PostgreSQL'
+    ]
+  },
+  {
+    id: 5,
+    title: 'Social Media Dashboard',
+    desc: 'An analytics dashboard aggregating data from various social platforms into cohesive, interactive charts and graphs.',
+    tech: ['React', 'D3.js', 'Firebase'],
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2022-11-05',
+    features: [
+      'Bespoke D3 chart rendering with real-time scaling',
+      'Aggregated API ingestors handling data updates',
+      'Clean export functionality to PDF and CSV tables',
+      'Modular drag-and-drop dashboard customize view'
+    ]
+  },
+  {
+    id: 6,
+    title: 'Weather App',
+    desc: 'A beautifully animated real-time weather application using the OpenWeather API, featuring dynamic backgrounds based on the current weather state.',
+    tech: ['React Native', 'OpenWeather API'],
+    image: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2022-09-12',
+    features: [
+      'Clean native cross-platform build (iOS & Android)',
+      'State-aware dynamic weather screens with soft parallax effects',
+      'Detailed 7-day reports and humidity indices',
+      'Geolocation detection for instant localized weather information'
+    ]
+  },
+  {
+    id: 7,
+    title: 'Portfolio Generator',
+    desc: 'A SaaS tool to instantly generate professional developer portfolios from a GitHub username, parsing repositories and commit histories.',
+    tech: ['Next.js', 'Supabase', 'GitHub API'],
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2022-06-18',
+    features: [
+      'One-click templates tailored specifically for developers',
+      'Automated repository analysis to select key showcase projects',
+      'Instant hosting generation and custom domain connection support',
+      'SEO audit dashboard integrated'
+    ]
+  },
+  {
+    id: 8,
+    title: 'Chat Application',
+    desc: 'A real-time chat app with end-to-end encryption, support for media sharing, and read receipts.',
+    tech: ['React', 'Socket.io', 'Node.js'],
+    image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2022-03-25',
+    features: [
+      'Secured messaging with cryptographic key pairs client-side',
+      'Seamless direct attachment storage and lazy-loaded image uploads',
+      'Typing status cues, online alerts, and read tick triggers',
+      'Multi-chat group rooms and customized channels'
+    ]
+  },
+  {
+    id: 9,
+    title: 'Recipe Finder AI',
+    desc: 'An AI-powered application that suggests recipes based on ingredients you currently have in your fridge, utilizing OpenAI integration.',
+    tech: ['React', 'Python', 'OpenAI API'],
+    image: 'https://images.unsplash.com/photo-1466637574441-749b8f19452f?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1466637574441-749b8f19452f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2021-12-05',
+    features: [
+      'OpenAI integration with prompt adjustments for recipe optimization',
+      'Ingredient detection using camera picture ingestion',
+      'Nutritional profiling estimations per portion',
+      'Shopping checklist export for missing ingredients'
+    ]
+  },
+  {
+    id: 10,
+    title: 'Expense Tracker',
+    desc: 'A personal finance tracker with beautiful visual reports to help users categorize their spending and stick to budgets.',
+    tech: ['Svelte', 'Chart.js', 'Tailwind'],
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=800&auto=format&fit=crop'
+    ],
+    date: '2021-10-10',
+    features: [
+      'Extensive interactive charts to drill down categories',
+      'Dynamic budgeting targets with automated limits warnings',
+      'CSV / Excel statement importer and parser',
+      'Highly portable, lightning-fast Svelte bundle size'
+    ]
+  }
+];
