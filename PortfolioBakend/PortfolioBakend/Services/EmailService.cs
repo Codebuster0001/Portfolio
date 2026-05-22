@@ -1,10 +1,10 @@
 using System;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MimeKit;
 
 namespace PortfolioBakend.Services
 {
@@ -17,48 +17,58 @@ namespace PortfolioBakend.Services
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<EmailService> _logger;
+        private static readonly HttpClient _httpClient = new HttpClient();
 
         public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
             _configuration = configuration;
             _logger = logger;
+            _httpClient.Timeout = TimeSpan.FromSeconds(15); // Fail fast so the UI doesn't hang
         }
 
         public async Task<bool> SendEmailAsync(string to, string subject, string htmlMessage)
         {
             try
             {
-                var smtpHost = _configuration["SmtpSettings:Host"];
-                var smtpPortStr = _configuration["SmtpSettings:Port"];
-                var smtpEmail = _configuration["SmtpSettings:Email"];
-                var smtpPass = _configuration["SmtpSettings:Password"];
-
-                if (string.IsNullOrEmpty(smtpHost) || string.IsNullOrEmpty(smtpEmail))
+                var apiKey = _configuration["BrevoApiKey"];
+                var senderEmail = _configuration["SmtpSettings:Email"];
+                var senderName = "Deepak Kushwaha";
+                
+                // If they haven't set up Brevo yet, fail gracefully and fast!
+                if (string.IsNullOrEmpty(apiKey))
                 {
-                    _logger.LogWarning("SMTP is not configured properly. Email to {To} was skipped.", to);
+                    _logger.LogWarning("BrevoApiKey is not configured. Email to {To} was skipped.", to);
                     return false;
                 }
 
-                int.TryParse(smtpPortStr, out int smtpPort);
-                if (smtpPort == 0) smtpPort = 587; // default
+                var payload = new
+                {
+                    sender = new { name = senderName, email = senderEmail },
+                    to = new[] { new { email = to } },
+                    subject = subject,
+                    htmlContent = htmlMessage
+                };
 
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Deepak Kushwaha", smtpEmail));
-                message.To.Add(MailboxAddress.Parse(to));
-                message.Subject = subject;
+                var jsonPayload = JsonSerializer.Serialize(payload);
+                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-                var bodyBuilder = new BodyBuilder { HtmlBody = htmlMessage };
-                message.Body = bodyBuilder.ToMessageBody();
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://api.brevo.com/v3/smtp/email");
+                request.Headers.Add("api-key", apiKey);
+                request.Content = content;
 
-                using var client = new SmtpClient();
-                // Enable STARTTLS connection
-                await client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
-                await client.AuthenticateAsync(smtpEmail, smtpPass);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
+                var response = await _httpClient.SendAsync(request);
 
-                _logger.LogInformation("Email successfully sent to {To}", to);
-                return true;
+                if (response.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation("Email successfully sent to {To} via Brevo API", to);
+                    return true;
+                }
+                else
+                {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    _logger.LogError("Brevo API returned {StatusCode}: {Error}", response.StatusCode, errorResponse);
+                    return false;
+                }
             }
             catch (Exception ex)
             {
