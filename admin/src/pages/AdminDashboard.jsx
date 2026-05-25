@@ -85,11 +85,11 @@ export default function AdminDashboard({ onLogout }) {
         <Route path="/analytics" element={
           <AnimatedRoute keyName="analytics">
             <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center mb-2">
+              <div className="w-16 h-16 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/5 flex items-center justify-center mb-2">
                 <LineChart className="w-8 h-8 text-purple-400" />
               </div>
-              <h2 className="text-xl font-bold text-white">Analytics</h2>
-              <p className="text-zinc-500 text-sm max-w-xs">Visitor analytics and traffic data will appear here. Coming soon.</p>
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Analytics</h2>
+              <p className="text-slate-400 dark:text-zinc-500 text-sm max-w-xs">Visitor analytics and traffic data will appear here. Coming soon.</p>
             </div>
           </AnimatedRoute>
         } />
@@ -97,11 +97,11 @@ export default function AdminDashboard({ onLogout }) {
         <Route path="/settings" element={
           <AnimatedRoute keyName="settings">
             <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center mb-2">
-                <Settings className="w-8 h-8 text-zinc-400" />
+              <div className="w-16 h-16 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/5 flex items-center justify-center mb-2">
+                <Settings className="w-8 h-8 text-slate-500 dark:text-zinc-400" />
               </div>
-              <h2 className="text-xl font-bold text-white">Settings</h2>
-              <p className="text-zinc-500 text-sm max-w-xs">Admin configuration and account settings. Coming soon.</p>
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Settings</h2>
+              <p className="text-slate-400 dark:text-zinc-500 text-sm max-w-xs">Admin configuration and account settings. Coming soon.</p>
             </div>
           </AnimatedRoute>
         } />
@@ -118,7 +118,7 @@ export default function AdminDashboard({ onLogout }) {
       <div className="absolute bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex w-64 flex-col bg-zinc-950/80 backdrop-blur-2xl border-r border-white/5 z-40">
+      <aside className="hidden md:flex w-64 flex-col bg-slate-50 dark:bg-zinc-950/80 backdrop-blur-2xl border-r border-slate-200 dark:border-white/5 z-40">
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       </aside>
 
@@ -151,7 +151,7 @@ export default function AdminDashboard({ onLogout }) {
               animate={{ x: 0 }}
               exit={{ x: -300 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="w-64 h-full bg-zinc-950 border-r border-white/5"
+              className="w-64 h-full bg-slate-50 dark:bg-zinc-950 border-r border-slate-200 dark:border-white/5"
               onClick={(e) => e.stopPropagation()}
             >
               <Sidebar

@@ -14,12 +14,12 @@ export default React.memo(function MessageTable() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
-      className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-xl min-h-[450px] flex flex-col"
+      className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-xl min-h-[450px] flex flex-col"
     >
-      <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="p-6 border-b border-slate-200 dark:border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white">Recent Messages</h2>
-          <p className="text-sm text-zinc-400">Inquiries from your contact form</p>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recent Messages</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Inquiries from your contact form</p>
         </div>
         <button 
           onClick={() => navigate('/messages')}
@@ -49,7 +49,7 @@ export default React.memo(function MessageTable() {
             Failed to load messages.
           </div>
         ) : messages.length === 0 ? (
-          <div className="p-12 text-center text-zinc-500">
+          <div className="p-12 text-center text-slate-400 dark:text-zinc-500">
             No recent messages.
           </div>
         ) : messages.map((msg, idx) => (
@@ -61,19 +61,19 @@ export default React.memo(function MessageTable() {
             transition={{ duration: 0.3, delay: 0.5 + idx * 0.1 }}
             className={`p-4 hover:bg-white/5 transition-colors flex items-start gap-4 group cursor-pointer ${msg.isRead ? 'opacity-70' : 'opacity-100'}`}
           >
-            <div className={`p-2 rounded-full ${msg.isRead ? 'bg-zinc-800 text-zinc-500' : 'bg-blue-500/20 text-blue-400'}`}>
+            <div className={`p-2 rounded-full ${msg.isRead ? 'bg-slate-100 dark:bg-zinc-800 text-slate-400 dark:text-zinc-500' : 'bg-blue-500/20 text-blue-400'}`}>
               {msg.isRead ? <MailOpen className="w-5 h-5" /> : <Mail className="w-5 h-5" />}
             </div>
             
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">
-                <h4 className={`text-sm font-medium ${msg.isRead ? 'text-zinc-300' : 'text-white'}`}>{msg.name}</h4>
-                <span className="text-xs text-zinc-500 whitespace-nowrap ml-4">
+                <h4 className={`text-sm font-medium ${msg.isRead ? 'text-zinc-300' : 'text-slate-900 dark:text-white'}`}>{msg.name}</h4>
+                <span className="text-xs text-slate-400 dark:text-zinc-500 whitespace-nowrap ml-4">
                   {new Date(msg.createdAt).toLocaleDateString()}
                 </span>
               </div>
-              <p className="text-xs text-zinc-500 font-mono mb-1">{msg.email}</p>
-              <p className={`text-sm truncate ${msg.isRead ? 'text-zinc-500' : 'text-zinc-300'}`}>{msg.message}</p>
+              <p className="text-xs text-slate-400 dark:text-zinc-500 font-mono mb-1">{msg.email}</p>
+              <p className={`text-sm truncate ${msg.isRead ? 'text-slate-400 dark:text-zinc-500' : 'text-zinc-300'}`}>{msg.message}</p>
             </div>
           </motion.div>
         ))}

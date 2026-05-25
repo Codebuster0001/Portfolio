@@ -14,12 +14,12 @@ export default React.memo(function ProjectTable() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden shadow-xl min-h-[450px] flex flex-col"
+      className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl overflow-hidden shadow-xl min-h-[450px] flex flex-col"
     >
-      <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="p-6 border-b border-slate-200 dark:border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white">Recent Projects</h2>
-          <p className="text-sm text-zinc-400">View your portfolio projects</p>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recent Projects</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">View your portfolio projects</p>
         </div>
         <button 
           onClick={() => navigate('/projects')}
@@ -30,8 +30,8 @@ export default React.memo(function ProjectTable() {
       </div>
       
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm text-zinc-400">
-          <thead className="text-xs uppercase bg-zinc-950/50 text-zinc-500 border-b border-white/5">
+        <table className="w-full text-left text-sm text-slate-500 dark:text-zinc-400">
+          <thead className="text-xs uppercase bg-slate-50 dark:bg-zinc-950/50 text-slate-400 dark:text-zinc-500 border-b border-slate-200 dark:border-white/5">
             <tr>
               <th className="px-6 py-4 font-semibold">Project Name</th>
               <th className="px-6 py-4 font-semibold">Tech Stack</th>
@@ -59,7 +59,7 @@ export default React.memo(function ProjectTable() {
               </tr>
             ) : projects.length === 0 ? (
               <tr>
-                <td colSpan="5" className="px-6 py-12 text-center text-zinc-500">
+                <td colSpan="5" className="px-6 py-12 text-center text-slate-400 dark:text-zinc-500">
                   No projects found.
                 </td>
               </tr>
@@ -73,7 +73,7 @@ export default React.memo(function ProjectTable() {
                   transition={{ duration: 0.3, delay: 0.4 + idx * 0.1 }}
                   className="hover:bg-white/5 transition-colors group cursor-pointer"
                 >
-                  <td className="px-6 py-4 font-medium text-white">{project.title}</td>
+                  <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">{project.title}</td>
                   <td className="px-6 py-4 font-mono text-xs text-purple-400">
                     {project.technologies?.slice(0, 3).join(', ') || 'None'}
                     {project.technologies?.length > 3 && '...'}
@@ -82,7 +82,7 @@ export default React.memo(function ProjectTable() {
                     <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
                       project.status === 'Live' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 
                       project.status === 'In Progress' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                      'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
+                      'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20'
                     }`}>
                       {project.status || 'Planned'}
                     </span>
@@ -96,7 +96,7 @@ export default React.memo(function ProjectTable() {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded-lg text-zinc-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"
+                          className="p-1.5 rounded-lg text-slate-500 dark:text-zinc-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"
                         >
                           <ExternalLink className="w-4 h-4" />
                         </a>

@@ -22,17 +22,17 @@ export default function Drawer({ isOpen, onClose, title, children }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-xl bg-zinc-950 border-l border-zinc-800/80 z-50 shadow-2xl flex flex-col"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-xl bg-slate-50 dark:bg-zinc-950 border-l border-slate-200 dark:border-zinc-800/80 z-50 shadow-2xl flex flex-col"
           >
             {/* Top border ambient gradient */}
             <div className="h-[2px] w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
 
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-zinc-800/60">
-              <h2 className="text-xl font-bold tracking-tight text-white">{title}</h2>
+            <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-zinc-800/60">
+              <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">{title}</h2>
               <button
                 onClick={onClose}
-                className="p-2 rounded-xl bg-zinc-900 border border-zinc-800/40 text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200"
+                className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/40 text-slate-500 dark:text-zinc-400 hover:text-white hover:bg-slate-100 dark:bg-zinc-800/60 transition-all duration-200"
               >
                 <X className="w-5 h-5" />
               </button>

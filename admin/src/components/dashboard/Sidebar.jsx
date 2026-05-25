@@ -15,12 +15,12 @@ const menuItems = [
 export default function Sidebar({ activeTab, setActiveTab }) {
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="p-6 border-b border-white/5 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+      <div className="p-6 border-b border-slate-200 dark:border-white/5 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-blue-500/20">
           <Code2 className="w-6 h-6" />
         </div>
         <div>
-          <h2 className="text-base font-bold text-white tracking-wide">Deepak Kushwaha</h2>
+          <h2 className="text-base font-bold text-slate-900 dark:text-white tracking-wide">Deepak Kushwaha</h2>
           <span className="text-[11px] text-blue-400 font-mono tracking-wider uppercase">Admin Portal</span>
         </div>
       </div>
@@ -34,7 +34,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
               key={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-300 relative group ${
-                isActive ? 'text-white' : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                isActive ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white hover:bg-white/5'
               }`}
             >
               {isActive && (

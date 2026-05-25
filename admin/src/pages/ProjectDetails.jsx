@@ -20,7 +20,7 @@ export default function ProjectDetails() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
         <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-        <p className="text-zinc-500 font-medium">Loading project details...</p>
+        <p className="text-slate-400 dark:text-zinc-500 font-medium">Loading project details...</p>
       </div>
     );
   }
@@ -30,12 +30,12 @@ export default function ProjectDetails() {
       <div className="flex flex-col items-center justify-center min-h-[400px] gap-4 bg-red-500/5 border border-red-500/20 rounded-2xl">
         <AlertCircle className="w-10 h-10 text-red-500" />
         <div className="text-center">
-          <h2 className="text-lg font-bold text-white mb-1">Project Not Found</h2>
-          <p className="text-zinc-400 text-sm">The project you're looking for doesn't exist or an error occurred.</p>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Project Not Found</h2>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm">The project you're looking for doesn't exist or an error occurred.</p>
         </div>
         <button 
           onClick={() => navigate('/projects')}
-          className="mt-4 px-6 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-white rounded-xl transition-colors text-sm font-medium flex items-center gap-2"
+          className="mt-4 px-6 py-2 bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-white rounded-xl transition-colors text-sm font-medium flex items-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Projects
         </button>
@@ -60,7 +60,7 @@ export default function ProjectDetails() {
     'In Progress': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
     'Planned': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
     'Completed': 'bg-teal-500/10 text-teal-400 border-teal-500/20',
-    'Archived': 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20',
+    'Archived': 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20',
   };
 
   const statusColor = statusColors[project.status] || statusColors['Planned'];
@@ -68,12 +68,12 @@ export default function ProjectDetails() {
   return (
     <div className="space-y-8 pb-12 w-full max-w-[1600px] mx-auto">
       {/* Top Navigation & Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-zinc-900/50 p-4 rounded-2xl border border-white/5 backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/50 dark:bg-white dark:bg-zinc-900/50 p-4 rounded-2xl border border-slate-200 dark:border-white/5 backdrop-blur-md">
         <button 
           onClick={() => navigate('/projects')}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors group"
+          className="flex items-center gap-2 text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white transition-colors group"
         >
-          <div className="p-1.5 rounded-lg bg-zinc-800 group-hover:bg-zinc-700 transition-colors">
+          <div className="p-1.5 rounded-lg bg-slate-100 dark:bg-zinc-800 group-hover:bg-zinc-700 transition-colors">
             <ArrowLeft className="w-4 h-4" />
           </div>
           <span className="text-sm font-medium">Back to Projects</span>
@@ -98,7 +98,7 @@ export default function ProjectDetails() {
       </div>
 
       {/* Hero Banner Area */}
-      <div className="relative w-full h-[400px] rounded-3xl overflow-hidden border border-white/5 group bg-zinc-950">
+      <div className="relative w-full h-[400px] rounded-3xl overflow-hidden border border-slate-200 dark:border-white/5 group bg-slate-50 dark:bg-zinc-950">
         {project.imageUrl ? (
           <img 
             src={project.imageUrl} 
@@ -120,12 +120,12 @@ export default function ProjectDetails() {
             <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${statusColor}`}>
               {project.status || 'Planned'}
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-zinc-800 text-zinc-300 border border-zinc-700">
+            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-100 dark:bg-zinc-800 text-zinc-300 border border-zinc-700">
               {project.category || 'Uncategorized'}
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
             {project.title}
           </h1>
           
@@ -150,8 +150,8 @@ export default function ProjectDetails() {
         {/* Left Column: Description & Tech */}
         <div className="lg:col-span-2 space-y-8">
           {/* Description */}
-          <div className="bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-white/5 shadow-xl">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+          <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-slate-200 dark:border-white/5 shadow-xl">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
               <LayoutTemplate className="w-5 h-5 text-blue-400" />
               About Project
             </h2>
@@ -159,21 +159,21 @@ export default function ProjectDetails() {
               {project.description ? (
                 <p className="text-zinc-300 leading-relaxed whitespace-pre-wrap">{project.description}</p>
               ) : (
-                <p className="text-zinc-500 italic">No description provided for this project.</p>
+                <p className="text-slate-400 dark:text-zinc-500 italic">No description provided for this project.</p>
               )}
             </div>
           </div>
 
           {/* Key Features (if any) */}
           {project.features && project.features.length > 0 && (
-            <div className="bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-white/5 shadow-xl">
-              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
+            <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-slate-200 dark:border-white/5 shadow-xl">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
                 <Layers className="w-5 h-5 text-purple-400" />
                 Key Features
               </h2>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {project.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3 p-4 bg-zinc-950/50 rounded-2xl border border-zinc-800/50">
+                  <li key={idx} className="flex items-start gap-3 p-4 bg-slate-50 dark:bg-zinc-950/50 rounded-2xl border border-slate-200 dark:border-zinc-800/50">
                     <div className="w-6 h-6 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-xs font-bold">{idx + 1}</span>
                     </div>
@@ -188,8 +188,8 @@ export default function ProjectDetails() {
         {/* Right Column: Links & Tech Stack */}
         <div className="space-y-8">
           {/* Action Links */}
-          <div className="bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-white/5 shadow-xl">
-            <h3 className="text-lg font-bold text-white mb-6">Links & Resources</h3>
+          <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-slate-200 dark:border-white/5 shadow-xl">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Links & Resources</h3>
             <div className="space-y-4">
               {project.liveUrl ? (
                 <a 
@@ -202,7 +202,7 @@ export default function ProjectDetails() {
                   <ExternalLink className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </a>
               ) : (
-                <div className="flex items-center justify-between p-4 bg-zinc-800/50 text-zinc-500 rounded-2xl border border-zinc-700/50 cursor-not-allowed">
+                <div className="flex items-center justify-between p-4 bg-slate-100/50 dark:bg-slate-100 dark:bg-zinc-800/50 text-slate-400 dark:text-zinc-500 rounded-2xl border border-zinc-700/50 cursor-not-allowed">
                   <span className="font-semibold">No Live Link</span>
                   <ExternalLink className="w-5 h-5" />
                 </div>
@@ -213,13 +213,13 @@ export default function ProjectDetails() {
                   href={project.githubUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl transition-colors border border-white/5 group"
+                  className="flex items-center justify-between p-4 bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl transition-colors border border-slate-200 dark:border-white/5 group"
                 >
                   <span className="font-semibold">View Source Code</span>
                   <GitBranch className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </a>
               ) : (
-                <div className="flex items-center justify-between p-4 bg-zinc-900/50 text-zinc-600 rounded-2xl border border-white/5 cursor-not-allowed">
+                <div className="flex items-center justify-between p-4 bg-white/50 dark:bg-white dark:bg-zinc-900/50 text-zinc-600 rounded-2xl border border-slate-200 dark:border-white/5 cursor-not-allowed">
                   <span className="font-semibold">No Source Code</span>
                   <GitBranch className="w-5 h-5" />
                 </div>
@@ -228,21 +228,21 @@ export default function ProjectDetails() {
           </div>
 
           {/* Tech Stack */}
-          <div className="bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-white/5 shadow-xl">
-            <h3 className="text-lg font-bold text-white mb-6">Technologies Used</h3>
+          <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md rounded-3xl p-8 border border-slate-200 dark:border-white/5 shadow-xl">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Technologies Used</h3>
             {project.technologies && project.technologies.length > 0 ? (
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech, idx) => (
                   <span 
                     key={idx} 
-                    className="px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-sm text-zinc-300 font-mono shadow-inner"
+                    className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-lg text-sm text-zinc-300 font-mono shadow-inner"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
             ) : (
-              <p className="text-zinc-500 italic text-sm">No technologies specified.</p>
+              <p className="text-slate-400 dark:text-zinc-500 italic text-sm">No technologies specified.</p>
             )}
           </div>
           

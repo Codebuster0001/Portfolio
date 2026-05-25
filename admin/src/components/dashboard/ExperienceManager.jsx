@@ -32,18 +32,18 @@ const SortableItem = ({ id, experience, onEdit, onDelete }) => {
   };
 
   return (
-    <div ref={setNodeRef} style={style} className={`flex items-center gap-4 p-4 rounded-2xl border ${isDragging ? 'border-blue-500 bg-zinc-900/80 shadow-2xl' : 'border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800/60'} transition-colors`}>
-      <div {...attributes} {...listeners} className="p-2 cursor-grab active:cursor-grabbing text-zinc-500 hover:text-white rounded-lg">
+    <div ref={setNodeRef} style={style} className={`flex items-center gap-4 p-4 rounded-2xl border ${isDragging ? 'border-blue-500 bg-white dark:bg-zinc-900/80 shadow-2xl' : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:bg-zinc-800/60'} transition-colors`}>
+      <div {...attributes} {...listeners} className="p-2 cursor-grab active:cursor-grabbing text-slate-400 dark:text-zinc-500 hover:text-slate-900 dark:text-white rounded-lg">
         <GripVertical size={20} />
       </div>
       
-      <div className="p-3 rounded-xl bg-zinc-800/80 border border-zinc-700/50">
-        <DynamicIcon iconName={experience.iconName} iconLibrary={experience.iconLibrary} size={24} className="text-white" style={experience.iconColor ? { color: experience.iconColor } : {}} />
+      <div className="p-3 rounded-xl bg-slate-100 dark:bg-zinc-800/80 border border-zinc-700/50">
+        <DynamicIcon iconName={experience.iconName} iconLibrary={experience.iconLibrary} size={24} className="text-slate-900 dark:text-white" style={experience.iconColor ? { color: experience.iconColor } : {}} />
       </div>
 
       <div className="flex-grow min-w-0">
-        <h4 className="text-base font-bold text-white truncate">{experience.role}</h4>
-        <div className="flex items-center gap-2 text-sm text-zinc-400">
+        <h4 className="text-base font-bold text-slate-900 dark:text-white truncate">{experience.role}</h4>
+        <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-zinc-400">
           <span>{experience.company}</span>
           <span className="w-1 h-1 rounded-full bg-zinc-600" />
           <span>{experience.duration}</span>
@@ -54,10 +54,10 @@ const SortableItem = ({ id, experience, onEdit, onDelete }) => {
         {experience.isCurrent && (
           <span className="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">Current</span>
         )}
-        <button onClick={() => onEdit(experience)} className="p-2 text-zinc-400 hover:text-blue-400 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors">
+        <button onClick={() => onEdit(experience)} className="p-2 text-slate-500 dark:text-zinc-400 hover:text-blue-400 bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors">
           <Pencil size={18} />
         </button>
-        <button onClick={() => onDelete(experience.id)} className="p-2 text-zinc-400 hover:text-red-400 bg-zinc-800 hover:bg-red-500/20 rounded-lg transition-colors">
+        <button onClick={() => onDelete(experience.id)} className="p-2 text-slate-500 dark:text-zinc-400 hover:text-red-400 bg-slate-100 dark:bg-zinc-800 hover:bg-red-500/20 rounded-lg transition-colors">
           <Trash2 size={18} />
         </button>
       </div>
@@ -165,18 +165,18 @@ export default function ExperienceManager() {
   };
 
   const Fld = ({ label, children }) => (
-    <div><label className="block text-sm font-medium text-zinc-400 mb-1.5">{label}</label>{children}</div>
+    <div><label className="block text-sm font-medium text-slate-500 dark:text-zinc-400 mb-1.5">{label}</label>{children}</div>
   );
-  const inp = "w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all";
+  const inp = "w-full bg-white dark:bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all";
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Briefcase className="text-blue-500" /> Experience Timeline
           </h2>
-          <p className="text-zinc-400 text-sm mt-1">Manage your work history and roles.</p>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm mt-1">Manage your work history and roles.</p>
         </div>
         <button 
           onClick={() => { setForm(defaultForm); setEditingId(null); setIsModalOpen(true); }}
@@ -202,16 +202,16 @@ export default function ExperienceManager() {
               {activeId ? <SortableItem id={activeId} experience={items.find(i => i.id === activeId)} onEdit={() => {}} onDelete={() => {}} /> : null}
             </DragOverlay>
           </DndContext>
-          {items.length === 0 && <div className="text-center py-10 text-zinc-500 border border-dashed border-zinc-700 rounded-2xl">No experiences found. Add one to get started!</div>}
+          {items.length === 0 && <div className="text-center py-10 text-slate-400 dark:text-zinc-500 border border-dashed border-zinc-700 rounded-2xl">No experiences found. Add one to get started!</div>}
         </div>
       )}
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-2xl shadow-2xl relative my-8">
-            <div className="sticky top-0 bg-zinc-900 border-b border-zinc-800 p-6 flex justify-between items-center rounded-t-2xl z-10">
-              <h3 className="text-xl font-bold text-white">{editingId ? 'Edit Experience' : 'Add Experience'}</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-zinc-500 hover:text-white transition-colors"><X size={24} /></button>
+          <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl w-full max-w-2xl shadow-2xl relative my-8">
+            <div className="sticky top-0 bg-white dark:bg-zinc-900 border-b border-slate-200 dark:border-zinc-800 p-6 flex justify-between items-center rounded-t-2xl z-10">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">{editingId ? 'Edit Experience' : 'Add Experience'}</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors"><X size={24} /></button>
             </div>
             
             <form onSubmit={handleSave} className="p-6 space-y-6">
@@ -228,10 +228,10 @@ export default function ExperienceManager() {
 
               {/* Skills */}
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-zinc-400">Skills Used</label>
+                <label className="block text-sm font-medium text-slate-500 dark:text-zinc-400">Skills Used</label>
                 <div className="flex gap-2">
                   <input value={skillInput} onChange={e => setSkillInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addSkill())} placeholder="Add a skill and press Enter" className={inp} />
-                  <button type="button" onClick={addSkill} className="px-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl">Add</button>
+                  <button type="button" onClick={addSkill} className="px-4 bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl">Add</button>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {(form.skills || []).map((skill, i) => (
@@ -243,7 +243,7 @@ export default function ExperienceManager() {
               </div>
 
               {/* Icons & Colors */}
-              <div className="p-5 rounded-2xl bg-zinc-950/50 border border-zinc-800/80 space-y-4">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-zinc-950/50 border border-slate-200 dark:border-zinc-800/80 space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <Fld label="Icon Name"><input value={form.iconName || ''} onChange={e => setForm({ ...form, iconName: e.target.value })} placeholder="Code" className={inp} /></Fld>
                   <Fld label="Library">
@@ -251,7 +251,7 @@ export default function ExperienceManager() {
                       <option value="lucide-react">Lucide</option><option value="fa">FontAwesome</option><option value="si">SimpleIcons</option>
                     </select>
                   </Fld>
-                  <Fld label="Color"><input type="color" value={form.iconColor || '#3b82f6'} onChange={e => setForm({ ...form, iconColor: e.target.value })} className="w-full h-11 p-1 rounded-lg bg-zinc-900 border border-zinc-700 cursor-pointer" /></Fld>
+                  <Fld label="Color"><input type="color" value={form.iconColor || '#3b82f6'} onChange={e => setForm({ ...form, iconColor: e.target.value })} className="w-full h-11 p-1 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-700 cursor-pointer" /></Fld>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Fld label="Gradient From (Hex)"><input value={form.gradientFrom || ''} onChange={e => setForm({ ...form, gradientFrom: e.target.value })} placeholder="#3b82f6" className={inp} /></Fld>
@@ -259,15 +259,15 @@ export default function ExperienceManager() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4 border border-zinc-800 rounded-xl bg-zinc-900/50 cursor-pointer" onClick={() => setForm(f => ({ ...f, isCurrent: !f.isCurrent }))}>
+              <div className="flex items-center gap-3 p-4 border border-slate-200 dark:border-zinc-800 rounded-xl bg-white/50 dark:bg-white dark:bg-zinc-900/50 cursor-pointer" onClick={() => setForm(f => ({ ...f, isCurrent: !f.isCurrent }))}>
                 <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${form.isCurrent ? 'bg-blue-500 border-blue-500 text-white' : 'border-zinc-600'}`}>
                   {form.isCurrent && <span className="text-sm">✓</span>}
                 </div>
-                <div><div className="text-white font-medium">Current Role</div><div className="text-xs text-zinc-500">Highlight this as your present job</div></div>
+                <div><div className="text-slate-900 dark:text-white font-medium">Current Role</div><div className="text-xs text-slate-400 dark:text-zinc-500">Highlight this as your present job</div></div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-zinc-800">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 rounded-xl text-zinc-300 hover:bg-zinc-800 font-medium transition-colors">Cancel</button>
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-zinc-800">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 rounded-xl text-zinc-300 hover:bg-slate-100 dark:bg-zinc-800 font-medium transition-colors">Cancel</button>
                 <button type="submit" className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors"><Save size={18} /> Save</button>
               </div>
             </form>

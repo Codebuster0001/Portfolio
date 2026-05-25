@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from
 import { useDispatch } from 'react-redux';
 import { apiSlice } from './store/apiSlice';
 import { PortfolioDataProvider } from './context/PortfolioDataContext';
+import { ThemeProvider } from './context/ThemeProvider';
 import { ToastProvider } from './components/ui/Toast';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
@@ -76,7 +77,7 @@ const AppContent = () => {
       <GlobalLoader isLoading={isInitializing} />
       
       {!isInitializing && (
-        <Suspense fallback={<div className="min-h-screen bg-zinc-950" />}>
+        <Suspense fallback={<div className="min-h-screen bg-slate-50 dark:bg-zinc-950" />}>
           <ScrollManager />
           <Routes>
             <Route
@@ -112,11 +113,13 @@ const AppContent = () => {
 export default function App() {
   return (
     <BrowserRouter>
-      <PortfolioDataProvider>
-        <ToastProvider>
-          <AppContent />
-        </ToastProvider>
-      </PortfolioDataProvider>
+      <ThemeProvider>
+        <PortfolioDataProvider>
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
+        </PortfolioDataProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

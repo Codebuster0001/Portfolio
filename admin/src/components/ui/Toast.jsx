@@ -38,7 +38,7 @@ export function ToastProvider({ children }) {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                className="pointer-events-auto w-full bg-zinc-950/90 border border-zinc-800/80 rounded-2xl p-4 shadow-2xl backdrop-blur-md flex gap-3 items-start relative overflow-hidden"
+                className="pointer-events-auto w-full bg-slate-50 dark:bg-zinc-950/90 border border-slate-200 dark:border-zinc-800/80 rounded-2xl p-4 shadow-2xl backdrop-blur-md flex gap-3 items-start relative overflow-hidden"
               >
                 {/* Accent glow side bar */}
                 <div className={`absolute left-0 top-0 bottom-0 w-[4px] ${
@@ -55,17 +55,17 @@ export function ToastProvider({ children }) {
                 </div>
 
                 <div className="flex-1 min-w-0 pr-4">
-                  <h4 className="text-sm font-semibold text-white">
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
                     {isSuccess ? 'Success' : isError ? 'System Alert' : 'Notification'}
                   </h4>
-                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                  <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
                     {toast.message}
                   </p>
                 </div>
 
                 <button
                   onClick={() => removeToast(toast.id)}
-                  className="text-zinc-600 hover:text-zinc-400 p-0.5 rounded-lg hover:bg-zinc-900 transition-colors"
+                  className="text-zinc-600 hover:text-slate-500 dark:text-zinc-400 p-0.5 rounded-lg hover:bg-white dark:bg-zinc-900 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>

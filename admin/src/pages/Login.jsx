@@ -53,7 +53,7 @@ export default function Login({ onAccessGranted }) {
         <motion.div
           animate={error ? { x: [-10, 10, -8, 8, -5, 5, 0] } : { x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-zinc-950/40 border border-zinc-800/60 rounded-3xl p-8 backdrop-blur-2xl relative overflow-hidden min-h-[460px] flex flex-col justify-center"
+          className="bg-slate-50 dark:bg-zinc-950/40 border border-slate-200 dark:border-zinc-800/60 rounded-3xl p-8 backdrop-blur-2xl relative overflow-hidden min-h-[460px] flex flex-col justify-center"
         >
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-80" />
 
@@ -64,18 +64,18 @@ export default function Login({ onAccessGranted }) {
             className="space-y-6"
           >
             <div className="flex flex-col items-center mb-6">
-              <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800/80 flex items-center justify-center mb-4 text-blue-400">
+              <div className="w-16 h-16 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/80 flex items-center justify-center mb-4 text-blue-400">
                 <Lock className="w-6 h-6 animate-pulse" />
               </div>
-              <h1 className="text-2xl font-bold tracking-tight text-white mb-2">Portfolio Admin Hub</h1>
-              <p className="text-zinc-400 text-sm text-center">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">Portfolio Admin Hub</h1>
+              <p className="text-slate-500 dark:text-zinc-400 text-sm text-center">
                 Enter your administrator credentials to gain console access.
               </p>
             </div>
 
             <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
                   Email Address
                 </label>
                 <Input
@@ -83,13 +83,13 @@ export default function Login({ onAccessGranted }) {
                   placeholder="admin@portfolio.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-zinc-900/60 border-zinc-800/60 text-white rounded-xl py-5 pl-4 focus:ring-blue-500/20 placeholder:text-zinc-600"
+                  className="w-full bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/60 text-white rounded-xl py-5 pl-4 focus:ring-blue-500/20 placeholder:text-zinc-600"
                 />
               </div>
 
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                  <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
                     Password
                   </label>
                   <Link
@@ -105,12 +105,12 @@ export default function Login({ onAccessGranted }) {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-zinc-900/60 border-zinc-800/60 text-white rounded-xl py-5 pl-4 pr-12 focus:ring-blue-500/20 placeholder:text-zinc-600 font-mono"
+                    className="w-full bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/60 text-white rounded-xl py-5 pl-4 pr-12 focus:ring-blue-500/20 placeholder:text-zinc-600 font-mono"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPass(!showPass)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 hover:text-zinc-300 transition-colors"
                   >
                     {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>

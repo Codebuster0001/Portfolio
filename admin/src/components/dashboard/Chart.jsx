@@ -40,10 +40,10 @@ const dummyData = {
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-zinc-900/90 border border-white/10 p-3 rounded-lg shadow-xl backdrop-blur-md">
-        <p className="text-zinc-400 text-xs mb-1 font-semibold">{label}</p>
+      <div className="bg-white dark:bg-zinc-900/90 border border-slate-300 dark:border-white/10 p-3 rounded-lg shadow-xl backdrop-blur-md">
+        <p className="text-slate-500 dark:text-zinc-400 text-xs mb-1 font-semibold">{label}</p>
         <p className="text-blue-400 font-bold">
-          {payload[0].value} <span className="text-zinc-500 font-normal text-xs ml-1">visitors</span>
+          {payload[0].value} <span className="text-slate-400 dark:text-zinc-500 font-normal text-xs ml-1">visitors</span>
         </p>
       </div>
     );
@@ -59,20 +59,20 @@ export default function AnalyticsChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl w-full"
+      className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl w-full"
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white">Visitors Analytics</h2>
-          <p className="text-sm text-zinc-400">Track your portfolio traffic over time</p>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white">Visitors Analytics</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Track your portfolio traffic over time</p>
         </div>
-        <div className="flex bg-zinc-950 rounded-lg p-1 border border-white/5">
+        <div className="flex bg-slate-50 dark:bg-zinc-950 rounded-lg p-1 border border-slate-200 dark:border-white/5">
           {['daily', 'monthly', 'yearly'].map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
               className={`px-4 py-1.5 rounded-md text-xs font-semibold capitalize transition-all ${
-                filter === f ? 'bg-blue-600/20 text-blue-400' : 'text-zinc-500 hover:text-zinc-300'
+                filter === f ? 'bg-blue-600/20 text-blue-400' : 'text-slate-400 dark:text-zinc-500 hover:text-zinc-300'
               }`}
             >
               {f}

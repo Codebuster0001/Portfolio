@@ -38,26 +38,35 @@
 
 @layer base {
   * {
-    @apply border-zinc-800/40;
+    @apply border-slate-200 dark:border-zinc-800/40;
   }
   body {
-    @apply bg-[#08080c] text-zinc-100 antialiased selection:bg-blue-500/30 selection:text-blue-200;
+    @apply bg-slate-50 dark:bg-[#08080c] text-slate-900 dark:text-zinc-100 antialiased selection:bg-blue-500/30 selection:text-blue-200;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
-/* Custom scrollbar for dark premium look */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #08080c;
+  background: #f1f5f9; /* light mode */
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #08080c; /* dark mode */
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f2937;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
+html.dark ::-webkit-scrollbar-thumb {
+  background: #1f2937;
+}
 ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
   background: #374151;
 }

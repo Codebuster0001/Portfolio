@@ -97,10 +97,10 @@ export default function ResetPassword() {
   if (tokenError) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#080b14] px-4">
-        <div className="bg-zinc-950/40 border border-red-500/30 rounded-3xl p-8 max-w-md w-full text-center space-y-4">
+        <div className="bg-slate-50 dark:bg-zinc-950/40 border border-red-500/30 rounded-3xl p-8 max-w-md w-full text-center space-y-4">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto" />
-          <h2 className="text-xl font-bold text-white">Invalid Link</h2>
-          <p className="text-zinc-400 text-sm">The password reset link is invalid or has expired. Please request a new one.</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Invalid Link</h2>
+          <p className="text-slate-500 dark:text-zinc-400 text-sm">The password reset link is invalid or has expired. Please request a new one.</p>
           <Button onClick={() => navigate('/forgot-password')} className="w-full mt-4">
             Request New Link
           </Button>
@@ -123,7 +123,7 @@ export default function ResetPassword() {
         <motion.div
           animate={error ? { x: [-10, 10, -8, 8, -5, 5, 0] } : { x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-zinc-950/40 border border-zinc-800/60 rounded-3xl p-8 backdrop-blur-2xl relative overflow-hidden min-h-[460px] flex flex-col justify-center"
+          className="bg-slate-50 dark:bg-zinc-950/40 border border-slate-200 dark:border-zinc-800/60 rounded-3xl p-8 backdrop-blur-2xl relative overflow-hidden min-h-[460px] flex flex-col justify-center"
         >
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-80" />
 
@@ -137,18 +137,18 @@ export default function ResetPassword() {
                 className="space-y-6 w-full"
               >
                 <div className="flex flex-col items-center mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800/80 flex items-center justify-center mb-4 text-blue-400">
+                  <div className="w-16 h-16 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/80 flex items-center justify-center mb-4 text-blue-400">
                     <Key className="w-6 h-6 animate-pulse" />
                   </div>
-                  <h1 className="text-2xl font-bold tracking-tight text-white mb-2">Reset Password</h1>
-                  <p className="text-zinc-400 text-sm text-center">
+                  <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">Reset Password</h1>
+                  <p className="text-slate-500 dark:text-zinc-400 text-sm text-center">
                     Please enter your new secure password.
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                    <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
                       New Password
                     </label>
                     <div className="relative">
@@ -157,12 +157,12 @@ export default function ResetPassword() {
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full bg-zinc-900/60 border-zinc-800/60 text-white rounded-xl py-5 pl-4 pr-12 focus:ring-blue-500/20 placeholder:text-zinc-600 font-mono"
+                        className="w-full bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/60 text-white rounded-xl py-5 pl-4 pr-12 focus:ring-blue-500/20 placeholder:text-zinc-600 font-mono"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPass(!showPass)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 hover:text-zinc-300 transition-colors"
                       >
                         {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -173,18 +173,18 @@ export default function ResetPassword() {
                         {[1, 2, 3, 4, 5].map((level) => (
                           <div 
                             key={level} 
-                            className={`flex-1 rounded-full transition-colors duration-300 ${strength >= level ? getStrengthColor() : 'bg-zinc-800'}`}
+                            className={`flex-1 rounded-full transition-colors duration-300 ${strength >= level ? getStrengthColor() : 'bg-slate-100 dark:bg-zinc-800'}`}
                           />
                         ))}
                       </div>
-                      <p className={`text-xs ${strength === 5 ? 'text-emerald-400' : 'text-zinc-500'} text-right font-medium`}>
+                      <p className={`text-xs ${strength === 5 ? 'text-emerald-400' : 'text-slate-400 dark:text-zinc-500'} text-right font-medium`}>
                         {getStrengthText()}
                       </p>
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                    <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
                       Confirm Password
                     </label>
                     <div className="relative">
@@ -193,12 +193,12 @@ export default function ResetPassword() {
                         placeholder="••••••••"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full bg-zinc-900/60 border-zinc-800/60 text-white rounded-xl py-5 pl-4 pr-12 focus:ring-blue-500/20 placeholder:text-zinc-600 font-mono"
+                        className="w-full bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/60 text-white rounded-xl py-5 pl-4 pr-12 focus:ring-blue-500/20 placeholder:text-zinc-600 font-mono"
                       />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPass(!showConfirmPass)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500 hover:text-zinc-300 transition-colors"
                       >
                         {showConfirmPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -240,8 +240,8 @@ export default function ResetPassword() {
                 </div>
                 
                 <div className="text-center space-y-2">
-                  <h2 className="text-xl font-bold text-white tracking-tight">Password Updated</h2>
-                  <p className="text-zinc-400 text-sm max-w-xs mx-auto leading-relaxed">
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Password Updated</h2>
+                  <p className="text-slate-500 dark:text-zinc-400 text-sm max-w-xs mx-auto leading-relaxed">
                     Your password has been successfully reset. Redirecting to login...
                   </p>
                 </div>

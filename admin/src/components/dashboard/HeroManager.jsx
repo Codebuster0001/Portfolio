@@ -75,7 +75,7 @@ export default function HeroManager() {
 
   // Generic File Type Visual Finder
   const getFileIcon = (url) => {
-    if (!url) return <File className="w-10 h-10 text-zinc-500" />;
+    if (!url) return <File className="w-10 h-10 text-slate-400 dark:text-zinc-500" />;
     const cleanUrl = url.toLowerCase();
 
     if (cleanUrl.endsWith('.pdf')) {
@@ -87,7 +87,7 @@ export default function HeroManager() {
     if (cleanUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) {
       return <ImageIcon className="w-10 h-10 text-blue-400" />;
     }
-    return <File className="w-10 h-10 text-zinc-400" />;
+    return <File className="w-10 h-10 text-slate-500 dark:text-zinc-400" />;
   };
 
   // Safe Deletion Action Trigger
@@ -210,10 +210,10 @@ export default function HeroManager() {
     <div className="space-y-6 w-full mx-auto pb-12">
       
       {/* Header and Save Controls */}
-      <div className="flex items-center justify-between bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl">
+      <div className="flex items-center justify-between bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Hero Landing Manager</h1>
-          <p className="text-sm text-zinc-400">Configure your landing page, details, and media assets.</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Hero Landing Manager</h1>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Configure your landing page, details, and media assets.</p>
         </div>
         <div className="flex items-center gap-3">
           <AnimatePresence mode="wait">
@@ -249,66 +249,66 @@ export default function HeroManager() {
       )}
 
       {/* Hero Form Data */}
-      <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
+      <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Your Full Name</label>
-            <Input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="Deepak Kushwaha" />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Your Full Name</label>
+            <Input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Deepak Kushwaha" />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Professional Role Title</label>
-            <Input value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="Full Stack Engineer" />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Professional Role Title</label>
+            <Input value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Full Stack Engineer" />
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">About Description</label>
-          <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white min-h-24" placeholder="Briefly describe your profile focus..." />
+          <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">About Description</label>
+          <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white min-h-24" placeholder="Briefly describe your profile focus..." />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Availability Status</label>
-            <Input value={form.availabilityStatus} onChange={e => setForm(f => ({ ...f, availabilityStatus: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="Available for new opportunities" />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Availability Status</label>
+            <Input value={form.availabilityStatus} onChange={e => setForm(f => ({ ...f, availabilityStatus: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Available for new opportunities" />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> GitHub URL</label>
-            <Input value={form.githubUrl} onChange={e => setForm(f => ({ ...f, githubUrl: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="https://github.com/..." />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> GitHub URL</label>
+            <Input value={form.githubUrl} onChange={e => setForm(f => ({ ...f, githubUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://github.com/..." />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> LinkedIn URL</label>
-            <Input value={form.linkedinUrl} onChange={e => setForm(f => ({ ...f, linkedinUrl: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="https://linkedin.com/in/..." />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> LinkedIn URL</label>
+            <Input value={form.linkedinUrl} onChange={e => setForm(f => ({ ...f, linkedinUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://linkedin.com/in/..." />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Twitter URL</label>
-            <Input value={form.twitterUrl} onChange={e => setForm(f => ({ ...f, twitterUrl: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="https://twitter.com/..." />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Twitter URL</label>
+            <Input value={form.twitterUrl} onChange={e => setForm(f => ({ ...f, twitterUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://twitter.com/..." />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Instagram URL</label>
-            <Input value={form.instagramUrl} onChange={e => setForm(f => ({ ...f, instagramUrl: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="https://instagram.com/..." />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Instagram URL</label>
+            <Input value={form.instagramUrl} onChange={e => setForm(f => ({ ...f, instagramUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://instagram.com/..." />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Gmail Address</label>
-            <Input value={form.gmailAddress} onChange={e => setForm(f => ({ ...f, gmailAddress: e.target.value }))} className="bg-zinc-950 border-zinc-800 text-white" placeholder="youremail@gmail.com" />
+            <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Gmail Address</label>
+            <Input value={form.gmailAddress} onChange={e => setForm(f => ({ ...f, gmailAddress: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="youremail@gmail.com" />
           </div>
         </div>
       </div>
 
       {/* --- Media & Assets --- */}
-      <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
+      <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
         <div>
-          <h2 className="text-xl font-bold text-white">Media & Assets Workspace</h2>
-          <p className="text-sm text-zinc-400">Upload profile visuals, PDF resume documents, videos, zip folders, or archives to Cloudinary.</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Media & Assets Workspace</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Upload profile visuals, PDF resume documents, videos, zip folders, or archives to Cloudinary.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
           {/* PROFILE PHOTO BLOCK */}
-          <div className={`bg-zinc-950/40 rounded-xl p-5 border transition-all flex flex-col items-center text-center space-y-4 relative ${
-            photoUpload.dragActive ? 'border-blue-500 bg-blue-500/5' : 'border-white/5'
+          <div className={`bg-slate-50 dark:bg-zinc-950/40 rounded-xl p-5 border transition-all flex flex-col items-center text-center space-y-4 relative ${
+            photoUpload.dragActive ? 'border-blue-500 bg-blue-500/5' : 'border-slate-200 dark:border-white/5'
           }`}
             onDragEnter={(e) => handleDrag(e, 'photo', true)}
             onDragOver={(e) => handleDrag(e, 'photo', true)}
@@ -317,7 +317,7 @@ export default function HeroManager() {
           >
             <h3 className="text-sm font-semibold text-zinc-300 uppercase tracking-wider">Profile Photo</h3>
             
-            <div className="relative w-28 h-28 rounded-full border-2 border-dashed border-zinc-700 flex items-center justify-center overflow-hidden bg-zinc-950/80 group">
+            <div className="relative w-28 h-28 rounded-full border-2 border-dashed border-zinc-700 flex items-center justify-center overflow-hidden bg-slate-50 dark:bg-zinc-950/80 group">
               {form.profilePhoto ? (
                 <>
                   <img src={form.profilePhoto} alt="Profile" className="w-full h-full object-cover" />
@@ -335,7 +335,7 @@ export default function HeroManager() {
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col items-center justify-center text-zinc-500">
+                <div className="flex flex-col items-center justify-center text-slate-400 dark:text-zinc-500">
                   <Upload className="w-6 h-6 mb-1" />
                   <span className="text-[10px]">Drag & Drop</span>
                 </div>
@@ -345,7 +345,7 @@ export default function HeroManager() {
                 <div className="absolute inset-0 bg-black/75 flex flex-col items-center justify-center p-2">
                   <Loader2 className="w-6 h-6 text-blue-400 animate-spin mb-1" />
                   <span className="text-[10px] text-zinc-300 font-bold">{photoUpload.progress}%</span>
-                  <div className="w-[80%] h-1 bg-zinc-800 rounded-full overflow-hidden mt-1">
+                  <div className="w-[80%] h-1 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden mt-1">
                     <div className="h-full bg-blue-500" style={{ width: `${photoUpload.progress}%` }} />
                   </div>
                 </div>
@@ -361,7 +361,7 @@ export default function HeroManager() {
                   className="hidden" 
                   disabled={photoUpload.loading} 
                 />
-                <div className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 text-xs font-semibold transition-colors">
+                <div className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 hover:bg-slate-100 dark:bg-zinc-800 text-zinc-300 text-xs font-semibold transition-colors">
                   <Upload className="w-3.5 h-3.5" />
                   {photoUpload.loading ? 'Uploading Image...' : 'Choose Image'}
                 </div>
@@ -369,15 +369,15 @@ export default function HeroManager() {
             </div>
             
             {form.profilePhoto && (
-              <p className="text-[10px] text-zinc-500 font-mono truncate w-full px-2" title={form.profilePhoto}>
+              <p className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono truncate w-full px-2" title={form.profilePhoto}>
                 {form.profilePhoto}
               </p>
             )}
           </div>
 
           {/* DYNAMIC RESUME FILE BLOCK (SUPPORT ALL FILE TYPES) */}
-          <div className={`bg-zinc-950/40 rounded-xl p-5 border transition-all flex flex-col items-center text-center space-y-4 relative ${
-            resumeUpload.dragActive ? 'border-purple-500 bg-purple-500/5' : 'border-white/5'
+          <div className={`bg-slate-50 dark:bg-zinc-950/40 rounded-xl p-5 border transition-all flex flex-col items-center text-center space-y-4 relative ${
+            resumeUpload.dragActive ? 'border-purple-500 bg-purple-500/5' : 'border-slate-200 dark:border-white/5'
           }`}
             onDragEnter={(e) => handleDrag(e, 'resume', true)}
             onDragOver={(e) => handleDrag(e, 'resume', true)}
@@ -386,11 +386,11 @@ export default function HeroManager() {
           >
             <h3 className="text-sm font-semibold text-zinc-300 uppercase tracking-wider">Resume / Custom File</h3>
             
-            <div className="relative w-28 h-28 rounded-xl border-2 border-dashed border-zinc-700 flex items-center justify-center overflow-hidden bg-zinc-950/80 group">
+            <div className="relative w-28 h-28 rounded-xl border-2 border-dashed border-zinc-700 flex items-center justify-center overflow-hidden bg-slate-50 dark:bg-zinc-950/80 group">
               {form.resumeUrl ? (
                 <div className="flex flex-col items-center justify-center">
                   {getFileIcon(form.resumeUrl)}
-                  <span className="text-[9px] text-zinc-400 font-semibold uppercase tracking-wider mt-1.5 truncate max-w-[90px]">
+                  <span className="text-[9px] text-slate-500 dark:text-zinc-400 font-semibold uppercase tracking-wider mt-1.5 truncate max-w-[90px]">
                     {form.resumeUrl.split('/').pop().split('?')[0]}
                   </span>
                   
@@ -414,7 +414,7 @@ export default function HeroManager() {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center text-zinc-500">
+                <div className="flex flex-col items-center justify-center text-slate-400 dark:text-zinc-500">
                   <File className="w-6 h-6 mb-1" />
                   <span className="text-[10px]">Drag & Drop File</span>
                 </div>
@@ -424,7 +424,7 @@ export default function HeroManager() {
                 <div className="absolute inset-0 bg-black/75 flex flex-col items-center justify-center p-2">
                   <Loader2 className="w-6 h-6 text-purple-400 animate-spin mb-1" />
                   <span className="text-[10px] text-zinc-300 font-bold">{resumeUpload.progress}%</span>
-                  <div className="w-[80%] h-1 bg-zinc-800 rounded-full overflow-hidden mt-1">
+                  <div className="w-[80%] h-1 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden mt-1">
                     <div className="h-full bg-purple-500" style={{ width: `${resumeUpload.progress}%` }} />
                   </div>
                 </div>
@@ -439,7 +439,7 @@ export default function HeroManager() {
                   className="hidden" 
                   disabled={resumeUpload.loading} 
                 />
-                <div className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 text-xs font-semibold transition-colors">
+                <div className="w-full flex items-center justify-center gap-2 h-9 rounded-lg bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 hover:bg-slate-100 dark:bg-zinc-800 text-zinc-300 text-xs font-semibold transition-colors">
                   <Upload className="w-3.5 h-3.5" />
                   {resumeUpload.loading ? 'Uploading File...' : 'Choose File'}
                 </div>
@@ -447,7 +447,7 @@ export default function HeroManager() {
             </div>
 
             {form.resumeUrl && (
-              <p className="text-[10px] text-zinc-500 font-mono truncate w-full px-2" title={form.resumeUrl}>
+              <p className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono truncate w-full px-2" title={form.resumeUrl}>
                 {form.resumeUrl}
               </p>
             )}
@@ -456,35 +456,35 @@ export default function HeroManager() {
       </div>
 
       {/* --- Technical Expertise --- */}
-      <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl space-y-4">
+      <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl space-y-4">
         <div>
-          <h2 className="text-xl font-bold text-white">Technical Expertise & Skills</h2>
-          <p className="text-sm text-zinc-400">Add or manage key engineering keywords displayed on your landing page.</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Technical Expertise & Skills</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Add or manage key engineering keywords displayed on your landing page.</p>
         </div>
         <div className="flex gap-2">
-          <Input value={newTech} onChange={e => setNewTech(e.target.value)} onKeyDown={e => e.key === 'Enter' && addTech()} className="bg-zinc-950 border-zinc-800 text-white" placeholder="Add skill (e.g. Next.js, QuestPDF)" />
-          <Button onClick={addTech} className="bg-zinc-800 hover:bg-zinc-700 text-white font-semibold flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add</Button>
+          <Input value={newTech} onChange={e => setNewTech(e.target.value)} onKeyDown={e => e.key === 'Enter' && addTech()} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Add skill (e.g. Next.js, QuestPDF)" />
+          <Button onClick={addTech} className="bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-700 text-white font-semibold flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add</Button>
         </div>
         <div className="flex flex-wrap gap-2 pt-2">
           {form.techStack.map(tech => (
-            <span key={tech} className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-semibold">
+            <span key={tech} className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-100 dark:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-semibold">
               {tech}
-              <button onClick={() => removeTech(tech)} className="text-zinc-500 hover:text-red-400 transition-colors"><X className="w-3 h-3" /></button>
+              <button onClick={() => removeTech(tech)} className="text-slate-400 dark:text-zinc-500 hover:text-red-400 transition-colors"><X className="w-3 h-3" /></button>
             </span>
           ))}
         </div>
       </div>
 
       {/* --- Gradient Colors --- */}
-      <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl space-y-4">
+      <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl space-y-4">
         <div>
-          <h2 className="text-lg font-bold text-white">Name Gradient Colors</h2>
-          <p className="text-sm text-zinc-400">Choose the gradient colors for your name highlight.</p>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white">Name Gradient Colors</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Choose the gradient colors for your name highlight.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {(['gradientFrom', 'gradientVia', 'gradientTo']).map((key) => (
             <div key={key} className="space-y-2">
-              <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider capitalize">{key.replace('gradient', '')}</label>
+              <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider capitalize">{key.replace('gradient', '')}</label>
               <div className="flex flex-wrap gap-2">
                 {GRADIENT_OPTIONS.map(color => (
                   <button

@@ -58,7 +58,7 @@ export default function ForgotPassword() {
         <motion.div
           animate={error ? { x: [-10, 10, -8, 8, -5, 5, 0] } : { x: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-zinc-950/40 border border-zinc-800/60 rounded-3xl p-8 backdrop-blur-2xl relative overflow-hidden min-h-[460px] flex flex-col justify-center"
+          className="bg-slate-50 dark:bg-zinc-950/40 border border-slate-200 dark:border-zinc-800/60 rounded-3xl p-8 backdrop-blur-2xl relative overflow-hidden min-h-[460px] flex flex-col justify-center"
         >
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-80" />
 
@@ -72,18 +72,18 @@ export default function ForgotPassword() {
                 className="space-y-6 w-full"
               >
                 <div className="flex flex-col items-center mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800/80 flex items-center justify-center mb-4 text-blue-400">
+                  <div className="w-16 h-16 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/80 flex items-center justify-center mb-4 text-blue-400">
                     <Mail className="w-6 h-6 animate-pulse" />
                   </div>
-                  <h1 className="text-2xl font-bold tracking-tight text-white mb-2">Password Recovery</h1>
-                  <p className="text-zinc-400 text-sm text-center">
+                  <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">Password Recovery</h1>
+                  <p className="text-slate-500 dark:text-zinc-400 text-sm text-center">
                     Enter your registered email to receive a secure recovery link.
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                    <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">
                       Recovery Email
                     </label>
                     <Input
@@ -91,7 +91,7 @@ export default function ForgotPassword() {
                       placeholder="admin@portfolio.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-zinc-900/60 border-zinc-800/60 text-white rounded-xl py-5 pl-4 focus:ring-blue-500/20 placeholder:text-zinc-600"
+                      className="w-full bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/60 text-white rounded-xl py-5 pl-4 focus:ring-blue-500/20 placeholder:text-zinc-600"
                     />
                   </div>
 
@@ -120,7 +120,7 @@ export default function ForgotPassword() {
 
                 <Link
                   to="/login"
-                  className="w-full py-3.5 rounded-xl border border-zinc-800/40 bg-zinc-900/10 text-zinc-400 text-sm font-medium hover:bg-zinc-900/40 hover:text-white transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl border border-slate-200 dark:border-zinc-800/40 bg-white dark:bg-zinc-900/10 text-slate-500 dark:text-zinc-400 text-sm font-medium hover:bg-white dark:bg-zinc-900/40 hover:text-white transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back to Login
@@ -138,8 +138,8 @@ export default function ForgotPassword() {
                 </div>
                 
                 <div className="text-center space-y-2">
-                  <h2 className="text-xl font-bold text-white tracking-tight">Recovery Email Sent</h2>
-                  <p className="text-zinc-400 text-sm max-w-xs mx-auto leading-relaxed">
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Recovery Email Sent</h2>
+                  <p className="text-slate-500 dark:text-zinc-400 text-sm max-w-xs mx-auto leading-relaxed">
                     A secure password reset link has been dispatched to <span className="text-blue-400 font-mono">{email}</span>. Check your inbox!
                   </p>
                 </div>

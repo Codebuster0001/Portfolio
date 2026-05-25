@@ -86,39 +86,39 @@ export default function AboutManager() {
       className="space-y-8 w-full mx-auto"
     >
       {/* 1. ABOUT CONTENT SECTION */}
-      <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
+      <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
         <div>
-          <h2 className="text-xl font-bold text-white">About Section Details</h2>
-          <p className="text-sm text-zinc-400">Update your main introduction text.</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">About Section Details</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Update your main introduction text.</p>
         </div>
 
         {contentLoading ? (
-          <div className="text-zinc-500 animate-pulse">Loading content...</div>
+          <div className="text-slate-400 dark:text-zinc-500 animate-pulse">Loading content...</div>
         ) : (
           <div className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Title</label>
+              <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Title</label>
               <Input 
                 value={contentForm.title} 
                 onChange={(e) => setContentForm({...contentForm, title: e.target.value})} 
-                className="bg-zinc-950 border-zinc-800/50 text-white" 
+                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-white" 
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Subtitle</label>
+              <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Subtitle</label>
               <Input 
                 value={contentForm.subtitle} 
                 onChange={(e) => setContentForm({...contentForm, subtitle: e.target.value})} 
-                className="bg-zinc-950 border-zinc-800/50 text-white" 
+                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-white" 
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Description</label>
+              <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Description</label>
               <Textarea 
                 rows={4} 
                 value={contentForm.description} 
                 onChange={(e) => setContentForm({...contentForm, description: e.target.value})} 
-                className="bg-zinc-950 border-zinc-800/50 text-white" 
+                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-white" 
               />
             </div>
             <Button 
@@ -134,21 +134,21 @@ export default function AboutManager() {
       </div>
 
       {/* 2. SKILLS SECTION */}
-      <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
+      <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
         <div>
-          <h2 className="text-xl font-bold text-white">About Skills</h2>
-          <p className="text-sm text-zinc-400">Manage the skills listed in your about section.</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">About Skills</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Manage the skills listed in your about section.</p>
         </div>
 
         {/* Add Skill Form */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-zinc-950/50 p-4 rounded-xl border border-white/5">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-slate-50 dark:bg-zinc-950/50 p-4 rounded-xl border border-slate-200 dark:border-white/5">
           <div className="space-y-1.5">
-            <label className="text-xs text-zinc-500">Title</label>
-            <Input value={newSkill.title} onChange={e => setNewSkill({...newSkill, title: e.target.value})} className="bg-zinc-900 border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Clean Code" />
+            <label className="text-xs text-slate-400 dark:text-zinc-500">Title</label>
+            <Input value={newSkill.title} onChange={e => setNewSkill({...newSkill, title: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Clean Code" />
           </div>
           <div className="space-y-1.5 md:col-span-2">
-            <label className="text-xs text-zinc-500">Description</label>
-            <Input value={newSkill.description} onChange={e => setNewSkill({...newSkill, description: e.target.value})} className="bg-zinc-900 border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Writing maintainable software" />
+            <label className="text-xs text-slate-400 dark:text-zinc-500">Description</label>
+            <Input value={newSkill.description} onChange={e => setNewSkill({...newSkill, description: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Writing maintainable software" />
           </div>
           <Button onClick={handleAddSkill} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white h-9">
             <Plus className="w-4 h-4 mr-1" /> Add Skill
@@ -158,10 +158,10 @@ export default function AboutManager() {
         {/* Skills List */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {skills?.map((skill) => (
-            <div key={skill.id} className="flex items-center justify-between p-4 rounded-xl bg-zinc-950 border border-white/5 group">
+            <div key={skill.id} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-white/5 group">
               <div>
-                <h4 className="text-white font-medium text-sm">{skill.title}</h4>
-                <p className="text-zinc-500 text-xs mt-1">{skill.description}</p>
+                <h4 className="text-slate-900 dark:text-white font-medium text-sm">{skill.title}</h4>
+                <p className="text-slate-400 dark:text-zinc-500 text-xs mt-1">{skill.description}</p>
               </div>
               <button 
                 onClick={async () => {
@@ -172,7 +172,7 @@ export default function AboutManager() {
                     addToast('Failed to delete skill. Error: ' + (err?.data || err?.message || 'Unknown error'), 'error');
                   }
                 }}
-                className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                className="p-2 text-slate-400 dark:text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -182,25 +182,25 @@ export default function AboutManager() {
       </div>
 
       {/* 3. STATS SECTION */}
-      <div className="bg-zinc-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
+      <div className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl space-y-6">
         <div>
-          <h2 className="text-xl font-bold text-white">Portfolio Stats</h2>
-          <p className="text-sm text-zinc-400">Manage the numeric stats (e.g. Years Experience, Projects).</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Portfolio Stats</h2>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Manage the numeric stats (e.g. Years Experience, Projects).</p>
         </div>
 
         {/* Add Stat Form */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-zinc-950/50 p-4 rounded-xl border border-white/5">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-slate-50 dark:bg-zinc-950/50 p-4 rounded-xl border border-slate-200 dark:border-white/5">
           <div className="space-y-1.5">
-            <label className="text-xs text-zinc-500">Label</label>
-            <Input value={newStat.label} onChange={e => setNewStat({...newStat, label: e.target.value})} className="bg-zinc-900 border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Projects" />
+            <label className="text-xs text-slate-400 dark:text-zinc-500">Label</label>
+            <Input value={newStat.label} onChange={e => setNewStat({...newStat, label: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Projects" />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs text-zinc-500">Value (Number)</label>
-            <Input type="number" value={newStat.value} onChange={e => setNewStat({...newStat, value: parseInt(e.target.value) || 0})} className="bg-zinc-900 border-zinc-800 text-white h-9 text-sm" />
+            <label className="text-xs text-slate-400 dark:text-zinc-500">Value (Number)</label>
+            <Input type="number" value={newStat.value} onChange={e => setNewStat({...newStat, value: parseInt(e.target.value) || 0})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs text-zinc-500">Suffix</label>
-            <Input value={newStat.suffix} onChange={e => setNewStat({...newStat, suffix: e.target.value})} className="bg-zinc-900 border-zinc-800 text-white h-9 text-sm" placeholder="e.g. +" />
+            <label className="text-xs text-slate-400 dark:text-zinc-500">Suffix</label>
+            <Input value={newStat.suffix} onChange={e => setNewStat({...newStat, suffix: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. +" />
           </div>
           <Button onClick={handleAddStat} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white h-9">
             <Plus className="w-4 h-4 mr-1" /> Add Stat
@@ -210,10 +210,10 @@ export default function AboutManager() {
         {/* Stats List */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {stats?.map((stat) => (
-            <div key={stat.id} className="flex items-center justify-between p-4 rounded-xl bg-zinc-950 border border-white/5 group">
+            <div key={stat.id} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-white/5 group">
               <div>
-                <p className="text-zinc-500 text-xs font-medium uppercase tracking-wider">{stat.label}</p>
-                <p className="text-2xl font-bold text-white mt-1">{stat.value}<span className="text-blue-400">{stat.suffix}</span></p>
+                <p className="text-slate-400 dark:text-zinc-500 text-xs font-medium uppercase tracking-wider">{stat.label}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{stat.value}<span className="text-blue-400">{stat.suffix}</span></p>
               </div>
               <button 
                 onClick={async () => {
@@ -224,7 +224,7 @@ export default function AboutManager() {
                     addToast('Failed to delete stat. Error: ' + (err?.data || err?.message || 'Unknown error'), 'error');
                   }
                 }}
-                className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                className="p-2 text-slate-400 dark:text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
