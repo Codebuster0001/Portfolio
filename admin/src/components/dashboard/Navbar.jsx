@@ -3,13 +3,13 @@ import { Bell, LogOut, Search, Menu } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 const TAB_TITLES = {
-  home: 'Dashboard',
-  hero: 'Hero Section',
-  about: 'About',
-  projects: 'Projects',
-  messages: 'Messages',
-  analytics: 'Analytics',
-  settings: 'Settings',
+  home: 'dashboard',
+  hero: 'heroSection',
+  about: 'about',
+  projects: 'projects',
+  messages: 'messages',
+  analytics: 'analytics',
+  settings: 'settings',
 };
 
 export default function Navbar({ activeTabTitle, onLogout, onOpenSidebar }) {
@@ -24,13 +24,6 @@ export default function Navbar({ activeTabTitle, onLogout, onOpenSidebar }) {
           <Menu className="w-6 h-6" />
         </button>
         <h1 className="text-xl md:text-2xl font-bold text-white tracking-tight">{pageTitle}</h1>
-        <div className="hidden md:flex relative max-w-md w-full">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-          <Input 
-            placeholder="Search dashboard..." 
-            className="w-full bg-zinc-900/50 border-white/5 text-white pl-10 rounded-full focus-visible:ring-blue-500/50 h-10"
-          />
-        </div>
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
