@@ -1,11 +1,11 @@
 using System;
-using System.Threading;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MimeKit;
 
 namespace PortfolioBakend.Services
 {
@@ -18,81 +18,58 @@ namespace PortfolioBakend.Services
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<EmailService> _logger;
+        private readonly HttpClient _httpClient;
 
-        private readonly SmtpClient _client;
-        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        // The user provided this exact API key in the chat
+        private const string RESEND_API_KEY = "re_HTZaohFc_LQnAjQYwxmc6pb5aBWZqH3de";
 
         public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
             _configuration = configuration;
             _logger = logger;
-            _client = new SmtpClient();
+            _httpClient = new HttpClient();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", RESEND_API_KEY);
         }
 
         public async Task<bool> SendEmailAsync(string to, string subject, string htmlMessage)
         {
-            await _semaphore.WaitAsync();
             try
             {
-                var smtpHost = _configuration["SmtpSettings:Host"];
-                var smtpPortStr = _configuration["SmtpSettings:Port"];
-                var smtpEmail = _configuration["SmtpSettings:Email"];
-                var smtpPass = _configuration["SmtpSettings:Password"];
+                _logger.LogInformation("Initializing Resend API for email delivery...");
 
-                if (string.IsNullOrEmpty(smtpHost) || string.IsNullOrEmpty(smtpEmail))
+                // Resend API requires onboarding@resend.dev if a custom domain is not verified.
+                var payload = new
                 {
-                    _logger.LogWarning("SMTP is not configured properly. Email to {To} was skipped.", to);
+                    from = "Portfolio Admin <onboarding@resend.dev>",
+                    to = new[] { to },
+                    subject = subject,
+                    html = htmlMessage
+                };
+
+                var jsonPayload = JsonSerializer.Serialize(payload);
+                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                _logger.LogInformation("Sending email via Resend API to {To}...", to);
+                
+                var response = await _httpClient.PostAsync("https://api.resend.com/emails", content);
+                var responseBody = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation("✅ Email sent successfully via Resend API.");
+                    _logger.LogInformation("Resend response: {Response}", responseBody);
+                    return true;
+                }
+                else
+                {
+                    _logger.LogError("❌ Resend API rejected the email! Status: {Status}, Response: {Response}", response.StatusCode, responseBody);
                     return false;
                 }
-
-                int.TryParse(smtpPortStr, out int smtpPort);
-                if (smtpPort == 0) smtpPort = 587;
-
-                _logger.LogInformation("Initializing SMTP...");
-
-                if (!_client.IsConnected)
-                {
-                    _logger.LogInformation("SMTP not connected. Connecting to {Host}:{Port} with StartTls...", smtpHost, smtpPort);
-                    await _client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
-                    _logger.LogInformation("SMTP connected successfully.");
-                }
-
-                if (!_client.IsAuthenticated)
-                {
-                    _logger.LogInformation("SMTP not authenticated. Authenticating with email: {Email}...", smtpEmail);
-                    await _client.AuthenticateAsync(smtpEmail, smtpPass);
-                    _logger.LogInformation("SMTP authenticated successfully.");
-                }
-
-                _logger.LogInformation("Generating email template...");
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Portfolio Admin", smtpEmail));
-                message.To.Add(MailboxAddress.Parse(to));
-                message.Subject = subject;
-
-                var bodyBuilder = new BodyBuilder { HtmlBody = htmlMessage };
-                message.Body = bodyBuilder.ToMessageBody();
-
-                _logger.LogInformation("Sending email to {To}...", to);
-                var response = await _client.SendAsync(message);
-                
-                _logger.LogInformation("Email sent successfully.");
-                _logger.LogInformation("SMTP response: {Response}", response);
-                return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "CRITICAL ERROR: Failed to send email to {To}. Exception details: {Message}", to, ex.Message);
-                // Attempt to disconnect if fault occurred so we start fresh next time
-                if (_client.IsConnected)
-                {
-                    await _client.DisconnectAsync(true);
-                }
+                _logger.LogError(ex, "❌ CRITICAL ERROR: Failed to execute Resend API request to {To}. Exception: {Message}", to, ex.Message);
                 return false;
-            }
-            finally
-            {
-                _semaphore.Release();
             }
         }
     }
