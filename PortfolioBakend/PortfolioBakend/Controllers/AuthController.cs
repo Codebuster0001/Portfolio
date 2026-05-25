@@ -89,11 +89,42 @@ namespace PortfolioBakend.Controllers
         });
 
             // Send actual email with reset link
-            var resetLink = $"http://localhost:5173/reset-password?token={token}";
-            await _emailService.SendEmailAsync(email, "Reset Password", $"Click here: <a href='{resetLink}'>Reset Password</a>");
+            var resetLink = $"http://localhost:5174/reset-password/{token}";
+            var htmlMessage = $@"
+            <div style='font-family: Arial, sans-serif; max-w-md; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px; text-align: center;'>
+                <h2 style='color: #333;'>Password Reset Request</h2>
+                <p style='color: #555;'>We received a request to reset your password. Click the button below to create a new password. This link will expire in 15 minutes.</p>
+                <a href='{resetLink}' style='display: inline-block; padding: 12px 24px; margin: 20px 0; font-size: 16px; color: #fff; background-color: #3b82f6; text-decoration: none; border-radius: 5px; font-weight: bold;'>Reset Password</a>
+                <p style='color: #777; font-size: 12px;'>If you did not request this, please ignore this email or contact support.</p>
+            </div>";
+
+            await _emailService.SendEmailAsync(email, "Reset Your Password", htmlMessage);
 
             // Do not return token to frontend for security reasons
             return Ok(new { message = "Reset link sent to your email" });
+        }
+
+        // 🔍 VALIDATE RESET TOKEN
+        [HttpGet("validate-reset-token")]
+        public async Task<IActionResult> ValidateResetToken([FromQuery] string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                return BadRequest("Token is required");
+
+            var query = @"
+            SELECT * FROM users 
+            WHERE reset_token = @Token 
+            AND reset_token_expiry > NOW()";
+
+            var dt = await _db.ExecuteQueryAsync(query, new[]
+            {
+                new NpgsqlParameter("@Token", token)
+            });
+
+            if (dt.Rows.Count == 0)
+                return BadRequest("Invalid or expired token");
+
+            return Ok(new { message = "Token is valid" });
         }
 
         // 🔄 RESET PASSWORD

@@ -49,6 +49,9 @@ export const apiSlice = createApi({
         body: resetData,
       }),
     }),
+    validateResetToken: builder.query({
+      query: (token) => `/Auth/validate-reset-token?token=${token}`,
+    }),
     
     // Hero Section
     getHero: builder.query({
@@ -269,6 +272,7 @@ export const {
   useLoginMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useValidateResetTokenQuery,
   useGetAboutContentQuery,
   useUpdateAboutContentMutation,
   useGetAboutSkillsQuery,

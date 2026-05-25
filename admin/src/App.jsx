@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux';
 import { apiSlice } from './store/apiSlice';
 import { PortfolioDataProvider } from './context/PortfolioDataContext';
 import { ToastProvider } from './components/ui/Toast';
-import LoginGate from './pages/LoginGate';
+import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import GlobalLoader from './components/ui/GlobalLoader';
 import ScrollManager from './components/ScrollManager';
 
@@ -39,8 +41,6 @@ const AppContent = () => {
       }
 
       try {
-        // We only preload critical authentication or lightweight shell data here.
-        // Heavy data grids will use Skeletons.
         await new Promise(resolve => setTimeout(resolve, 300));
       } catch (err) {
         console.error("Failed to preload admin data", err);
@@ -61,7 +61,6 @@ const AppContent = () => {
   }, [location.pathname]);
 
   const handleAccessGranted = () => {
-    // The token is saved in LoginGate, so we just set auth state
     setIsAuthenticated(true);
     navigate('/');
   };
@@ -83,12 +82,16 @@ const AppContent = () => {
             <Route
               path="/login"
               element={
-                isAuthenticated ? <Navigate to="/" replace /> : <LoginGate onAccessGranted={handleAccessGranted} />
+                isAuthenticated ? <Navigate to="/" replace /> : <Login onAccessGranted={handleAccessGranted} />
               }
             />
             <Route
-              path="/reset-password"
-              element={<LoginGate onAccessGranted={handleAccessGranted} />}
+              path="/forgot-password"
+              element={<ForgotPassword />}
+            />
+            <Route
+              path="/reset-password/:token"
+              element={<ResetPassword />}
             />
             {/* All dashboard pages as flat routes */}
             <Route
