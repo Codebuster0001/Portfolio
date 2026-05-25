@@ -29,11 +29,18 @@ export default function ForgotPassword() {
     }
 
     try {
-      await forgotPassword({ email: email.trim() }).unwrap();
+      const response = await forgotPassword({ email: email.trim() }).unwrap();
+      
+      // The API now returns a 200 OK with { success: false/true, message: "..." }
+      if (response && response.success === false) {
+        triggerError(response.message || 'Email account not found');
+        return;
+      }
+      
       setError(false);
       setIsSent(true);
     } catch (err) {
-      triggerError(err?.data || 'Email not registered or error occurred.');
+      triggerError(err?.data?.message || err?.data || 'Email account not found');
     }
   };
 

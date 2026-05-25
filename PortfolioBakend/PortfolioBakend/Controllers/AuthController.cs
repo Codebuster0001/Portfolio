@@ -68,7 +68,9 @@ namespace PortfolioBakend.Controllers
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
             var email = request.Email?.Trim();
-            var query = "SELECT * FROM users WHERE LOWER(email) = LOWER(@Email)";
+            
+            // OPTIMIZATION: Select only required fields, avoid SELECT *
+            var query = "SELECT id, email FROM users WHERE LOWER(email) = LOWER(@Email)";
 
             var dt = await _db.ExecuteQueryAsync(query, new[]
             {
@@ -76,7 +78,10 @@ namespace PortfolioBakend.Controllers
             });
 
             if (dt.Rows.Count == 0)
-                return NotFound("Email not registered");
+            {
+                // Return exact JSON format requested when email does not exist
+                return Ok(new { success = false, message = "Email account not found" });
+            }
 
             // 🔑 Generate reset token
             var token = Guid.NewGuid().ToString();
@@ -116,8 +121,8 @@ namespace PortfolioBakend.Controllers
             sw.Stop();
             _logger.LogInformation("ForgotPassword API queued email and completed in {ElapsedMs}ms", sw.ElapsedMilliseconds);
             
-            // Return immediately
-            return Ok(new { message = "Reset link sent to your email" });
+            // Return immediately with requested JSON format
+            return Ok(new { success = true, message = "Reset link sent successfully" });
         }
 
         // 🔍 VALIDATE RESET TOKEN

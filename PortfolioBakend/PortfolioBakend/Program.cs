@@ -188,8 +188,8 @@ builder.Services.AddRateLimiter(options =>
 
     options.AddFixedWindowLimiter("ForgotPasswordLimit", opt =>
     {
-        opt.PermitLimit = 3;
-        opt.Window = TimeSpan.FromMinutes(10);
+        opt.PermitLimit = 5;
+        opt.Window = TimeSpan.FromMinutes(15);
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
         opt.QueueLimit = 0;
     });
