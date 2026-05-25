@@ -100,8 +100,16 @@ namespace PortfolioBakend.Controllers
                 new NpgsqlParameter("@Email", email)
             });
 
+            // Dynamically get the frontend URL from the request headers
+            var origin = Request.Headers["Origin"].ToString();
+            if (string.IsNullOrEmpty(origin)) 
+            {
+                // Fallback for direct API testing
+                origin = "https://portfolio-nt45.onrender.com"; // Adjust if they have a separate frontend URL, but they deployed both to Render
+            }
+
             // Prepare email message for background queue
-            var resetLink = $"http://localhost:5174/reset-password/{token}";
+            var resetLink = $"{origin}/reset-password/{token}";
             var htmlMessage = $@"
             <div style='font-family: Arial, sans-serif; max-w-md; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px; text-align: center;'>
                 <h2 style='color: #333;'>Password Reset Request</h2>
@@ -119,7 +127,7 @@ namespace PortfolioBakend.Controllers
             });
 
             sw.Stop();
-            _logger.LogInformation("ForgotPassword API queued email and completed in {ElapsedMs}ms", sw.ElapsedMilliseconds);
+            _logger.LogInformation("ForgotPassword API queued email to {Email} with Origin {Origin} and completed in {ElapsedMs}ms", email, origin, sw.ElapsedMilliseconds);
             
             // Return immediately with requested JSON format
             return Ok(new { success = true, message = "Reset link sent successfully" });
