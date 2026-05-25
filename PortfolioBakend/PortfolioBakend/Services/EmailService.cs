@@ -34,8 +34,13 @@ namespace PortfolioBakend.Services
             {
                 _logger.LogInformation("Initializing Resend HTTP API...");
 
-                // Fallback to the explicit key the user provided if not in config
-                var apiKey = _configuration["Resend:ApiKey"] ?? "re_HTZaohFc_LQnAjQYwxmc6pb5aBWZqH3de";
+                // Pull securely from Environment Variables or appsettings.json
+                var apiKey = _configuration["Resend:ApiKey"];
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    _logger.LogError("❌ Resend API Key is missing from configuration!");
+                    return false;
+                }
                 
                 // Resend REQUIRES 'onboarding@resend.dev' for free accounts without a verified domain.
                 var fromEmail = _configuration["Resend:FromEmail"] ?? "onboarding@resend.dev";
