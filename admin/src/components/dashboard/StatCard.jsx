@@ -17,7 +17,7 @@ export default function StatCard({ title, count, icon: Icon, subtext, color = 'b
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className={`relative overflow-hidden rounded-2xl bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-sm border ${bgClasses.split(' ')[2]} p-6 group hover:bg-white dark:bg-zinc-900/80 transition-colors shadow-lg ${bgClasses.split(' ')[4]}`}
+      className={`relative overflow-hidden rounded-2xl bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm border ${bgClasses.split(' ')[2]} p-6 group hover:bg-white/80 dark:hover:bg-zinc-900/80 transition-colors shadow-lg ${bgClasses.split(' ')[4]}`}
     >
       <div className={`absolute -inset-0.5 bg-gradient-to-br ${bgClasses.split(' ')[0]} ${bgClasses.split(' ')[1]} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
       
