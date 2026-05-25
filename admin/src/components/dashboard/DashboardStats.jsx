@@ -8,7 +8,7 @@ import {
 } from '../../store/apiSlice';
 import { supabase } from '../../lib/supabase';
 
-export default function DashboardStats() {
+const DashboardStats = React.memo(function DashboardStats() {
   const { data: projectsData, isLoading: loadingProjects } = useGetProjectsQuery();
   const { data: contactsData, isLoading: loadingContacts } = useGetContactsQuery({ page: 1, pageSize: 1000 });
   const { data: skillsData, isLoading: loadingSkills } = useGetAboutSkillsQuery();
@@ -79,4 +79,6 @@ export default function DashboardStats() {
       />
     </div>
   );
-}
+});
+
+export default DashboardStats;

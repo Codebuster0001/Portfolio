@@ -5,17 +5,17 @@ import { Layers, Users, MessageCircle, Code2, LineChart, Settings } from 'lucide
 
 import Sidebar from '../components/dashboard/Sidebar';
 import Navbar from '../components/dashboard/Navbar';
-import DashboardStats from '../components/dashboard/DashboardStats';
-import AnalyticsChart from '../components/dashboard/Chart';
-import ProjectTable from '../components/dashboard/ProjectTable';
-import MessageTable from '../components/dashboard/MessageTable';
-import AboutManager from '../components/dashboard/AboutManager';
-import HeroManager from '../components/dashboard/HeroManager';
-import ProjectsManager from '../components/dashboard/ProjectsManager';
-import SkillsManager from '../components/dashboard/SkillsManager';
-import ExperienceManager from '../components/dashboard/ExperienceManager';
-import ContactManager from '../components/dashboard/ContactManager';
-import ProjectDetails from './ProjectDetails';
+const DashboardStats = React.lazy(() => import('../components/dashboard/DashboardStats'));
+const AnalyticsChart = React.lazy(() => import('../components/dashboard/Chart'));
+const ProjectTable = React.lazy(() => import('../components/dashboard/ProjectTable'));
+const MessageTable = React.lazy(() => import('../components/dashboard/MessageTable'));
+const AboutManager = React.lazy(() => import('../components/dashboard/AboutManager'));
+const HeroManager = React.lazy(() => import('../components/dashboard/HeroManager'));
+const ProjectsManager = React.lazy(() => import('../components/dashboard/ProjectsManager'));
+const SkillsManager = React.lazy(() => import('../components/dashboard/SkillsManager'));
+const ExperienceManager = React.lazy(() => import('../components/dashboard/ExperienceManager'));
+const ContactManager = React.lazy(() => import('../components/dashboard/ContactManager'));
+const ProjectDetails = React.lazy(() => import('./ProjectDetails'));
 
 export default function AdminDashboard({ onLogout }) {
   const navigate = useNavigate();
@@ -131,7 +131,13 @@ export default function AdminDashboard({ onLogout }) {
         />
         <main className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
           <AnimatePresence mode="wait">
-            {renderContent()}
+            <React.Suspense fallback={
+              <div className="w-full h-full flex items-center justify-center min-h-[50vh]">
+                <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
+              </div>
+            }>
+              {renderContent()}
+            </React.Suspense>
           </AnimatePresence>
         </main>
       </div>
