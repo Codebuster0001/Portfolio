@@ -9,6 +9,7 @@ using QuestPDF.Infrastructure;
 using System.Text;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using Microsoft.AspNetCore.DataProtection;
 
 // =========================================================================
 // 🚀 DYNAMIC PORT OCCUPATION & HEALTH CHECKS
@@ -194,6 +195,10 @@ builder.Services.AddRateLimiter(options =>
         opt.QueueLimit = 0;
     });
 });
+
+// ✅ Silence DataProtection warnings on Render (We use JWT, so persistent keys are not needed)
+builder.Services.AddDataProtection()
+    .UseEphemeralDataProtectionProvider();
 
 var app = builder.Build();
 
