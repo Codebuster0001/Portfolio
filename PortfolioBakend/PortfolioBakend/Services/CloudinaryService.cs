@@ -40,7 +40,14 @@ namespace PortfolioBakend.Services
             var extension = Path.GetExtension(file.FileName).ToLower();
             var contentType = file.ContentType.ToLower();
 
-            var isImage = contentType.StartsWith("image/") || extension == ".svg";
+            var isImage = contentType.StartsWith("image/") || 
+                          extension == ".svg" || 
+                          extension == ".png" || 
+                          extension == ".jpg" || 
+                          extension == ".jpeg" || 
+                          extension == ".gif" || 
+                          extension == ".webp" || 
+                          extension == ".bmp";
             var isVideo = contentType.StartsWith("video/") || extension == ".mp4" || extension == ".mov" || extension == ".avi" || extension == ".mkv";
 
             Console.WriteLine($"[DIAGNOSTICS] Uploading Asset - Name: '{file.FileName}', ContentType: '{file.ContentType}', isImage: {isImage}, isVideo: {isVideo}");
