@@ -48,6 +48,23 @@ namespace PortfolioBakend.Services
                 int.TryParse(smtpPortStr, out int smtpPort);
                 if (smtpPort == 0) smtpPort = 587;
 
+                _logger.LogInformation("Initializing SMTP...");
+
+                if (!_client.IsConnected)
+                {
+                    _logger.LogInformation("SMTP not connected. Connecting to {Host}:{Port} with StartTls...", smtpHost, smtpPort);
+                    await _client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
+                    _logger.LogInformation("SMTP connected successfully.");
+                }
+
+                if (!_client.IsAuthenticated)
+                {
+                    _logger.LogInformation("SMTP not authenticated. Authenticating with email: {Email}...", smtpEmail);
+                    await _client.AuthenticateAsync(smtpEmail, smtpPass);
+                    _logger.LogInformation("SMTP authenticated successfully.");
+                }
+
+                _logger.LogInformation("Generating email template...");
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Portfolio Admin", smtpEmail));
                 message.To.Add(MailboxAddress.Parse(to));
@@ -56,24 +73,16 @@ namespace PortfolioBakend.Services
                 var bodyBuilder = new BodyBuilder { HtmlBody = htmlMessage };
                 message.Body = bodyBuilder.ToMessageBody();
 
-                if (!_client.IsConnected)
-                {
-                    await _client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
-                }
-
-                if (!_client.IsAuthenticated)
-                {
-                    await _client.AuthenticateAsync(smtpEmail, smtpPass);
-                }
-
-                await _client.SendAsync(message);
+                _logger.LogInformation("Sending email to {To}...", to);
+                var response = await _client.SendAsync(message);
                 
-                _logger.LogInformation("Email successfully sent to {To}", to);
+                _logger.LogInformation("Email sent successfully.");
+                _logger.LogInformation("SMTP response: {Response}", response);
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to send email to {To}", to);
+                _logger.LogError(ex, "CRITICAL ERROR: Failed to send email to {To}. Exception details: {Message}", to, ex.Message);
                 // Attempt to disconnect if fault occurred so we start fresh next time
                 if (_client.IsConnected)
                 {

@@ -67,70 +67,102 @@ namespace PortfolioBakend.Controllers
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
+            _logger.LogInformation("\n[START] Forgot password request received");
+
             var email = request.Email?.Trim();
+            if (string.IsNullOrEmpty(email))
+            {
+                _logger.LogWarning("Email payload was null or empty.");
+                return BadRequest(new { success = false, message = "Email is required" });
+            }
+
+            _logger.LogInformation("Checking email existence in database for: {Email}", email);
             
             // OPTIMIZATION: Select only required fields, avoid SELECT *
             var query = "SELECT id, email FROM users WHERE LOWER(email) = LOWER(@Email)";
 
-            var dt = await _db.ExecuteQueryAsync(query, new[]
+            try
             {
-                new NpgsqlParameter("@Email", email)
-            });
+                var dt = await _db.ExecuteQueryAsync(query, new[]
+                {
+                    new NpgsqlParameter("@Email", email)
+                });
 
-            if (dt.Rows.Count == 0)
-            {
-                // Return exact JSON format requested when email does not exist
-                return Ok(new { success = false, message = "Email account not found" });
+                if (dt.Rows.Count == 0)
+                {
+                    _logger.LogInformation("Email NOT found in database: {Email}", email);
+                    // Return exact JSON format requested when email does not exist
+                    return Ok(new { success = false, message = "Email account not found" });
+                }
+
+                _logger.LogInformation("Email found: {Email}. Generating reset token...", email);
+
+                // 🔑 Generate reset token
+                var token = Guid.NewGuid().ToString();
+                var expiry = DateTime.UtcNow.AddMinutes(15);
+                
+                _logger.LogInformation("Token generated successfully. Saving token to database...");
+
+                // Save in DB
+                var updateQuery = @"
+                UPDATE users 
+                SET reset_token = @Token, reset_token_expiry = @Expiry 
+                WHERE email = @Email";
+
+                await _db.ExecuteNonQueryAsync(updateQuery, new[]
+                {
+                    new NpgsqlParameter("@Token", token),
+                    new NpgsqlParameter("@Expiry", expiry),
+                    new NpgsqlParameter("@Email", email)
+                });
+
+                _logger.LogInformation("Database save success. Preparing email message...");
+
+                // Dynamically get the frontend URL from the request headers
+                var origin = Request.Headers["Origin"].ToString();
+                if (string.IsNullOrEmpty(origin)) 
+                {
+                    // Fallback for direct API testing
+                    origin = "https://portfolio-nt45.onrender.com";
+                    _logger.LogWarning("Origin header was missing. Used fallback origin: {Origin}", origin);
+                }
+                else
+                {
+                    _logger.LogInformation("Extracted Origin header successfully: {Origin}", origin);
+                }
+
+                // Prepare email message for background queue
+                var resetLink = $"{origin}/reset-password/{token}";
+                var htmlMessage = $@"
+                <div style='font-family: Arial, sans-serif; max-w-md; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px; text-align: center;'>
+                    <h2 style='color: #333;'>Password Reset Request</h2>
+                    <p style='color: #555;'>We received a request to reset your password. Click the button below to create a new password. This link will expire in 15 minutes.</p>
+                    <a href='{resetLink}' style='display: inline-block; padding: 12px 24px; margin: 20px 0; font-size: 16px; color: #fff; background-color: #3b82f6; text-decoration: none; border-radius: 5px; font-weight: bold;'>Reset Password</a>
+                    <p style='color: #777; font-size: 12px;'>If you did not request this, please ignore this email or contact support.</p>
+                </div>";
+
+                _logger.LogInformation("Enqueuing email to BackgroundService...");
+
+                // 🔥 FIRE AND FORGET - Queue email instead of waiting
+                _emailQueue.EnqueueEmail(new EmailMessage 
+                { 
+                    ToEmail = email, 
+                    Subject = "Reset Your Password", 
+                    HtmlMessage = htmlMessage 
+                });
+
+                sw.Stop();
+                _logger.LogInformation("Request completed. API returned success response in {ElapsedMs}ms.", sw.ElapsedMilliseconds);
+                _logger.LogInformation("[END]\n");
+                
+                // Return immediately with requested JSON format
+                return Ok(new { success = true, message = "Reset link sent successfully" });
             }
-
-            // 🔑 Generate reset token
-            var token = Guid.NewGuid().ToString();
-            var expiry = DateTime.UtcNow.AddMinutes(15);
-
-            // Save in DB
-            var updateQuery = @"
-            UPDATE users 
-            SET reset_token = @Token, reset_token_expiry = @Expiry 
-            WHERE email = @Email";
-
-            await _db.ExecuteNonQueryAsync(updateQuery, new[]
+            catch (Exception ex)
             {
-                new NpgsqlParameter("@Token", token),
-                new NpgsqlParameter("@Expiry", expiry),
-                new NpgsqlParameter("@Email", email)
-            });
-
-            // Dynamically get the frontend URL from the request headers
-            var origin = Request.Headers["Origin"].ToString();
-            if (string.IsNullOrEmpty(origin)) 
-            {
-                // Fallback for direct API testing
-                origin = "https://portfolio-nt45.onrender.com"; // Adjust if they have a separate frontend URL, but they deployed both to Render
+                _logger.LogError(ex, "CRITICAL ERROR executing Forgot Password flow.");
+                return StatusCode(500, new { success = false, message = "Internal server error during password reset" });
             }
-
-            // Prepare email message for background queue
-            var resetLink = $"{origin}/reset-password/{token}";
-            var htmlMessage = $@"
-            <div style='font-family: Arial, sans-serif; max-w-md; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px; text-align: center;'>
-                <h2 style='color: #333;'>Password Reset Request</h2>
-                <p style='color: #555;'>We received a request to reset your password. Click the button below to create a new password. This link will expire in 15 minutes.</p>
-                <a href='{resetLink}' style='display: inline-block; padding: 12px 24px; margin: 20px 0; font-size: 16px; color: #fff; background-color: #3b82f6; text-decoration: none; border-radius: 5px; font-weight: bold;'>Reset Password</a>
-                <p style='color: #777; font-size: 12px;'>If you did not request this, please ignore this email or contact support.</p>
-            </div>";
-
-            // 🔥 FIRE AND FORGET - Queue email instead of waiting
-            _emailQueue.EnqueueEmail(new EmailMessage 
-            { 
-                ToEmail = email, 
-                Subject = "Reset Your Password", 
-                HtmlMessage = htmlMessage 
-            });
-
-            sw.Stop();
-            _logger.LogInformation("ForgotPassword API queued email to {Email} with Origin {Origin} and completed in {ElapsedMs}ms", email, origin, sw.ElapsedMilliseconds);
-            
-            // Return immediately with requested JSON format
-            return Ok(new { success = true, message = "Reset link sent successfully" });
         }
 
         // 🔍 VALIDATE RESET TOKEN

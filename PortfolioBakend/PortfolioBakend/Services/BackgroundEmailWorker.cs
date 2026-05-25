@@ -23,7 +23,9 @@ namespace PortfolioBakend.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Background Email Worker is starting.");
+            _logger.LogInformation("\n====================================================");
+            _logger.LogInformation("Background Email Worker is STARTING");
+            _logger.LogInformation("====================================================\n");
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -33,6 +35,7 @@ namespace PortfolioBakend.Services
                     if (emailItem != null)
                     {
                         var sw = Stopwatch.StartNew();
+                        _logger.LogInformation("[WORKER] Dequeued email job for: {Email}", emailItem.ToEmail);
                         
                         // We must resolve scoped services from the DI container manually in a BackgroundService
                         using var scope = _serviceProvider.CreateScope();
@@ -40,29 +43,40 @@ namespace PortfolioBakend.Services
 
                         try
                         {
-                            await emailService.SendEmailAsync(emailItem.ToEmail, emailItem.Subject, emailItem.HtmlMessage);
+                            _logger.LogInformation("[WORKER] Attempting to send background email...");
+                            var success = await emailService.SendEmailAsync(emailItem.ToEmail, emailItem.Subject, emailItem.HtmlMessage);
                             sw.Stop();
-                            _logger.LogInformation("Successfully sent background email to {Email} in {ElapsedMs}ms", emailItem.ToEmail, sw.ElapsedMilliseconds);
+
+                            if (success) 
+                            {
+                                _logger.LogInformation("[WORKER] ✅ Successfully sent background email to {Email} in {ElapsedMs}ms", emailItem.ToEmail, sw.ElapsedMilliseconds);
+                            }
+                            else
+                            {
+                                _logger.LogWarning("[WORKER] ⚠️ SendEmailAsync returned false for {Email}. Email may not have been sent.", emailItem.ToEmail);
+                            }
                         }
                         catch (Exception ex)
                         {
                             sw.Stop();
-                            _logger.LogError(ex, "Failed to send background email to {Email} after {ElapsedMs}ms", emailItem.ToEmail, sw.ElapsedMilliseconds);
+                            _logger.LogError(ex, "[WORKER] ❌ Failed to send background email to {Email} after {ElapsedMs}ms", emailItem.ToEmail, sw.ElapsedMilliseconds);
                             // Implement retry logic here if necessary in the future
                         }
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    // Execution cancelled
+                    _logger.LogInformation("Background Email Worker execution cancelled.");
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error occurred executing email queue item.");
+                    _logger.LogError(ex, "[WORKER] ❌ CRITICAL: Error occurred executing email queue item.");
                 }
             }
 
-            _logger.LogInformation("Background Email Worker is stopping.");
+            _logger.LogInformation("\n====================================================");
+            _logger.LogInformation("Background Email Worker is STOPPING");
+            _logger.LogInformation("====================================================\n");
         }
     }
 }

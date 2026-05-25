@@ -235,6 +235,12 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DbHelper>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    
+    logger.LogInformation("\n====================================================");
+    logger.LogInformation("STARTUP VALIDATION AND DEBUGGING");
+    logger.LogInformation("====================================================");
+
     try
     {
         // Add indexes for email and reset_token to optimize forgot-password endpoints
@@ -243,12 +249,49 @@ using (var scope = app.Services.CreateScope())
             CREATE INDEX IF NOT EXISTS idx_users_reset_token ON users (reset_token);
         ";
         await db.ExecuteNonQueryAsync(createIndexesSql, Array.Empty<Npgsql.NpgsqlParameter>());
-        Console.WriteLine("✅ Database performance indexes verified/created.");
+        logger.LogInformation("[STARTUP] ✅ Supabase database connection successful. Indexes verified.");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"⚠️ Failed to create database indexes: {ex.Message}");
+        logger.LogError(ex, "[STARTUP] ❌ Failed to connect to Supabase or create database indexes.");
     }
+
+    // Validate Environment Variables
+    var config = app.Services.GetRequiredService<IConfiguration>();
+    
+    var smtpHost = config["SmtpSettings:Host"];
+    var smtpPort = config["SmtpSettings:Port"];
+    var smtpEmail = config["SmtpSettings:Email"];
+    var smtpPass = config["SmtpSettings:Password"];
+    
+    if (string.IsNullOrEmpty(smtpHost) || string.IsNullOrEmpty(smtpEmail) || string.IsNullOrEmpty(smtpPass))
+    {
+        logger.LogError("[STARTUP] ❌ SMTP configuration is MISSING or incomplete in environment variables.");
+    }
+    else
+    {
+        logger.LogInformation("[STARTUP] ✅ SMTP configuration loaded.");
+        logger.LogInformation($"[STARTUP] SMTP_HOST: {smtpHost}");
+        logger.LogInformation($"[STARTUP] SMTP_PORT: {smtpPort}");
+        logger.LogInformation($"[STARTUP] SMTP_EMAIL: {smtpEmail}");
+        
+        if (smtpPass.StartsWith("\"") || smtpPass.EndsWith("\""))
+        {
+            logger.LogWarning("[STARTUP] ⚠️ WARNING: SMTP_PASSWORD contains literal double-quotes. If this is an App Password, this will cause authentication to fail! Please remove quotes from your Render environment variables.");
+        }
+    }
+
+    var jwtKey = config["Jwt:Key"];
+    if (string.IsNullOrEmpty(jwtKey))
+    {
+        logger.LogError("[STARTUP] ❌ JWT Secret Key is MISSING.");
+    }
+    else
+    {
+        logger.LogInformation("[STARTUP] ✅ JWT configuration loaded.");
+    }
+    
+    logger.LogInformation("====================================================\n");
 }
 
 app.Run();
