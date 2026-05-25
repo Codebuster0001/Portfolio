@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Menu, Github, Linkedin, Twitter } from 'lucide-react';
+import { Menu, Github, Linkedin, Twitter, Code2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useGetHeroQuery } from '../store/portfolioApi';
@@ -138,11 +138,9 @@ const Navbar = () => {
           onClick={() => handleNavClick('home')}
           className="flex items-center gap-2.5 group"
         >
-          {/* Initials Badge */}
+          {/* Logo Icon */}
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-            <span className="text-white text-sm font-bold tracking-wide leading-none">
-              {initials}
-            </span>
+            <Code2 className="w-5 h-5 text-white" />
           </div>
           {/* Full name — hidden on very small screens */}
           <span className="hidden sm:block text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
