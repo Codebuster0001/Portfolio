@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -18,14 +19,19 @@ namespace PortfolioBakend.Services
         private readonly IConfiguration _configuration;
         private readonly ILogger<EmailService> _logger;
 
+        private readonly SmtpClient _client;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+
         public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
             _configuration = configuration;
             _logger = logger;
+            _client = new SmtpClient();
         }
 
         public async Task<bool> SendEmailAsync(string to, string subject, string htmlMessage)
         {
+            await _semaphore.WaitAsync();
             try
             {
                 var smtpHost = _configuration["SmtpSettings:Host"];
@@ -40,7 +46,7 @@ namespace PortfolioBakend.Services
                 }
 
                 int.TryParse(smtpPortStr, out int smtpPort);
-                if (smtpPort == 0) smtpPort = 587; // default
+                if (smtpPort == 0) smtpPort = 587;
 
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Portfolio Admin", smtpEmail));
@@ -50,20 +56,34 @@ namespace PortfolioBakend.Services
                 var bodyBuilder = new BodyBuilder { HtmlBody = htmlMessage };
                 message.Body = bodyBuilder.ToMessageBody();
 
-                using var client = new SmtpClient();
-                // Enable STARTTLS connection
-                await client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
-                await client.AuthenticateAsync(smtpEmail, smtpPass);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
+                if (!_client.IsConnected)
+                {
+                    await _client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
+                }
 
+                if (!_client.IsAuthenticated)
+                {
+                    await _client.AuthenticateAsync(smtpEmail, smtpPass);
+                }
+
+                await _client.SendAsync(message);
+                
                 _logger.LogInformation("Email successfully sent to {To}", to);
                 return true;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to send email to {To}", to);
+                // Attempt to disconnect if fault occurred so we start fresh next time
+                if (_client.IsConnected)
+                {
+                    await _client.DisconnectAsync(true);
+                }
                 return false;
+            }
+            finally
+            {
+                _semaphore.Release();
             }
         }
     }

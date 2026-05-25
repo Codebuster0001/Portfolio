@@ -19,27 +19,30 @@ namespace PortfolioBakend.Controllers
     {
         private readonly DbHelper _db;
         private readonly IConfiguration _config;
-        private readonly IEmailService _emailService;
+        private readonly IEmailQueue _emailQueue;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(DbHelper db, IConfiguration config, IEmailService emailService)
+        public AuthController(DbHelper db, IConfiguration config, IEmailQueue emailQueue, ILogger<AuthController> logger)
         {
             _db = db;
             _config = config;
-            _emailService = emailService;
+            _emailQueue = emailQueue;
+            _logger = logger;
         }
 
         // ✅ LOGIN
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
             var email = request.Email?.Trim();
             var password = request.Password;
             var query = "SELECT * FROM users WHERE LOWER(email) = LOWER(@Email)";
 
             var dt = await _db.ExecuteQueryAsync(query, new[]
             {
-            new NpgsqlParameter("@Email", email)
-        });
+                new NpgsqlParameter("@Email", email)
+            });
 
             if (dt.Rows.Count == 0)
                 return Unauthorized("User not found");
@@ -53,20 +56,24 @@ namespace PortfolioBakend.Controllers
             // 🔐 Generate JWT
             var token = GenerateJwtToken(user["id"].ToString(), email);
 
+            sw.Stop();
+            _logger.LogInformation("Login API completed in {ElapsedMs}ms", sw.ElapsedMilliseconds);
             return Ok(new { token });
         }
 
         // 🔐 FORGOT PASSWORD
         [HttpPost("forgot-password")]
+        [EnableRateLimiting("ForgotPasswordLimit")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
             var email = request.Email?.Trim();
             var query = "SELECT * FROM users WHERE LOWER(email) = LOWER(@Email)";
 
             var dt = await _db.ExecuteQueryAsync(query, new[]
             {
-            new NpgsqlParameter("@Email", email)
-        });
+                new NpgsqlParameter("@Email", email)
+            });
 
             if (dt.Rows.Count == 0)
                 return NotFound("Email not registered");
@@ -83,12 +90,12 @@ namespace PortfolioBakend.Controllers
 
             await _db.ExecuteNonQueryAsync(updateQuery, new[]
             {
-            new NpgsqlParameter("@Token", token),
-            new NpgsqlParameter("@Expiry", expiry),
-            new NpgsqlParameter("@Email", email)
-        });
+                new NpgsqlParameter("@Token", token),
+                new NpgsqlParameter("@Expiry", expiry),
+                new NpgsqlParameter("@Email", email)
+            });
 
-            // Send actual email with reset link
+            // Prepare email message for background queue
             var resetLink = $"http://localhost:5174/reset-password/{token}";
             var htmlMessage = $@"
             <div style='font-family: Arial, sans-serif; max-w-md; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px; text-align: center;'>
@@ -98,9 +105,18 @@ namespace PortfolioBakend.Controllers
                 <p style='color: #777; font-size: 12px;'>If you did not request this, please ignore this email or contact support.</p>
             </div>";
 
-            await _emailService.SendEmailAsync(email, "Reset Your Password", htmlMessage);
+            // 🔥 FIRE AND FORGET - Queue email instead of waiting
+            _emailQueue.EnqueueEmail(new EmailMessage 
+            { 
+                ToEmail = email, 
+                Subject = "Reset Your Password", 
+                HtmlMessage = htmlMessage 
+            });
 
-            // Do not return token to frontend for security reasons
+            sw.Stop();
+            _logger.LogInformation("ForgotPassword API queued email and completed in {ElapsedMs}ms", sw.ElapsedMilliseconds);
+            
+            // Return immediately
             return Ok(new { message = "Reset link sent to your email" });
         }
 

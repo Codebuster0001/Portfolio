@@ -127,9 +127,13 @@ builder.Services.AddScoped<IExperienceRepository, ExperienceRepository>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
 
 // ✅ Contact Management System
-builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IContactService, ContactService>();
+
+// ✅ Background Email Queue Optimization
+builder.Services.AddSingleton<IEmailQueue, EmailQueue>();
+builder.Services.AddHostedService<BackgroundEmailWorker>();
 
 // Set up QuestPDF license on startup
 QuestPDF.Settings.License = LicenseType.Community;
@@ -181,6 +185,14 @@ builder.Services.AddRateLimiter(options =>
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
         opt.QueueLimit = 0;
     });
+
+    options.AddFixedWindowLimiter("ForgotPasswordLimit", opt =>
+    {
+        opt.PermitLimit = 3;
+        opt.Window = TimeSpan.FromMinutes(10);
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 0;
+    });
 });
 
 var app = builder.Build();
@@ -210,6 +222,28 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapMethods("/", new[] { "GET", "HEAD" }, () => Results.Ok(new { status = "API is running", timestamp = DateTime.UtcNow }));
+app.MapGet("/api/health", () => Results.Ok(new { status = "Healthy", environment = app.Environment.EnvironmentName, timestamp = DateTime.UtcNow }));
+
 app.MapControllers();
+
+// 🚀 Apply DB Performance Indexes on Startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DbHelper>();
+    try
+    {
+        // Add indexes for email and reset_token to optimize forgot-password endpoints
+        var createIndexesSql = @"
+            CREATE INDEX IF NOT EXISTS idx_users_email ON users (LOWER(email));
+            CREATE INDEX IF NOT EXISTS idx_users_reset_token ON users (reset_token);
+        ";
+        await db.ExecuteNonQueryAsync(createIndexesSql, Array.Empty<Npgsql.NpgsqlParameter>());
+        Console.WriteLine("✅ Database performance indexes verified/created.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"⚠️ Failed to create database indexes: {ex.Message}");
+    }
+}
 
 app.Run();
