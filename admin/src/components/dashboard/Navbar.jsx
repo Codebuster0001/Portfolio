@@ -3,13 +3,13 @@ import { Bell, LogOut, Search, Menu } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 const TAB_TITLES = {
-  home: 'dashboard',
-  hero: 'heroSection',
-  about: 'about',
-  projects: 'projects',
-  messages: 'messages',
-  analytics: 'analytics',
-  settings: 'settings',
+  home: 'Dashboard',
+  hero: 'Hero Section',
+  about: 'About',
+  projects: 'Projects',
+  messages: 'Messages',
+  analytics: 'Analytics',
+  settings: 'Settings',
 };
 
 export default function Navbar({ activeTabTitle, onLogout, onOpenSidebar }) {
