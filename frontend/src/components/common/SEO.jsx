@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 export default function SEO({
-  title = 'Codebuster | Full Stack Software Engineer Portfolio',
-  description = 'Welcome to the professional portfolio of Codebuster, a Full Stack Developer specializing in React, .NET Core, SQL Server, and cloud-native solutions.',
+  title = 'Deepak Kushwaha | Full Stack Software Engineer Portfolio',
+  description = 'Welcome to the professional portfolio of Deepak Kushwaha, a Full Stack Developer specializing in React, .NET Core, SQL Server, and cloud-native solutions.',
   keywords = 'Full Stack Developer, Software Engineer, React Portfolio, .NET Core API, Web Developer, Portfolio, Supabase, ADO.NET',
   image = '/assets/portfolio-preview.jpg',
   url = window.location.href,
@@ -65,7 +65,7 @@ export default function SEO({
   const defaultSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    'name': 'Codebuster',
+    'name': 'Deepak Kushwaha',
     'url': siteUrl,
     'image': fullImageUrl,
     'jobTitle': 'Full Stack Software Engineer',
@@ -94,7 +94,7 @@ export default function SEO({
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="author" content="Codebuster" />
+      <meta name="author" content="Deepak Kushwaha" />
       <link rel="canonical" href={url} />
 
       {/* Google Search Console Verification */}
@@ -108,7 +108,7 @@ export default function SEO({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={fullImageUrl} />
       <meta property="og:url" content={url} />
-      <meta property="og:site_name" content="Codebuster Portfolio" />
+      <meta property="og:site_name" content="Deepak Kushwaha Portfolio" />
 
       {/* Twitter Cards */}
       <meta name="twitter:card" content="summary_large_image" />

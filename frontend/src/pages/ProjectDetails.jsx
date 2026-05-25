@@ -108,9 +108,9 @@ export default function ProjectDetails() {
   return (
     <div className="min-h-screen bg-[#0b0f1a] pt-32 pb-24 text-white relative overflow-hidden">
       <SEO 
-        title={`${project.title} | Codebuster Project`}
+        title={`${project.title} | Deepak Kushwaha Project`}
         description={project.desc ? (project.desc.substring(0, 155) + '...') : `View details for the project ${project.title}`}
-        keywords={`${(project.tech || []).join(', ')}, ${project.title}, Codebuster Portfolio`}
+        keywords={`${(project.tech || []).join(', ')}, ${project.title}, Deepak Kushwaha Portfolio`}
         image={project.image}
         type="article"
       />

@@ -101,9 +101,9 @@ export default function AllProjects() {
   return (
     <div className="min-h-screen pt-32 pb-24 relative bg-[#0b0f1a]">
       <SEO 
-        title="Works & Projects | Codebuster"
-        description="Browse the comprehensive portfolio of software development works, custom APIs, dashboard integrations, and open-source contributions designed by Codebuster."
-        keywords="Software Projects, Web Apps, React Developer, C# API, Portfolio Showcase, Codebuster"
+        title="Works & Projects | Deepak Kushwaha"
+        description="Browse the comprehensive portfolio of software development works, custom APIs, dashboard integrations, and open-source contributions designed by Deepak Kushwaha."
+        keywords="Software Projects, Web Apps, React Developer, C# API, Portfolio Showcase, Deepak Kushwaha"
       />
       {/* Subtle Floating Background Elements for Linear look */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">

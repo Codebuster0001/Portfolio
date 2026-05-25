@@ -1,1 +1,0 @@
-import{a}from"./rolldown-runtime-DVDPw_7t.js";import{mn as e}from"./vendor-CFaA1oKx.js";import{r as m}from"./vendor-framer-B7ly5pMU.js";import{r as o}from"./index-FvGXajDS.js";var _=a(e(),1),i=m();function c({className:r,...t}){return(0,i.jsx)("div",{className:o("animate-pulse rounded-md bg-slate-100/50 dark:bg-slate-100 dark:bg-zinc-800/50",r),...t})}export{c as t};

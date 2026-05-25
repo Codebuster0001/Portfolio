@@ -77,8 +77,8 @@ const Home = () => {
   return (
     <div className="relative w-full">
       <SEO 
-        title="Codebuster | Full Stack Software Engineer Portfolio"
-        description="Explore Codebuster's software engineering portfolio showcasing high-performance enterprise applications, interactive user experiences, and secure APIs."
+        title="Deepak Kushwaha | Full Stack Software Engineer Portfolio"
+        description="Explore Deepak Kushwaha's software engineering portfolio showcasing high-performance enterprise applications, interactive user experiences, and secure APIs."
       />
       <Hero />
 
