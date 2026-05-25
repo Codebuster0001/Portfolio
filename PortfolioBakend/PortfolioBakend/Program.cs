@@ -259,26 +259,17 @@ using (var scope = app.Services.CreateScope())
     // Validate Environment Variables
     var config = app.Services.GetRequiredService<IConfiguration>();
     
-    var smtpHost = config["SmtpSettings:Host"];
-    var smtpPort = config["SmtpSettings:Port"];
-    var smtpEmail = config["SmtpSettings:Email"];
-    var smtpPass = config["SmtpSettings:Password"];
+    var resendKey = config["Resend:ApiKey"];
+    var resendFrom = config["Resend:FromEmail"];
     
-    if (string.IsNullOrEmpty(smtpHost) || string.IsNullOrEmpty(smtpEmail) || string.IsNullOrEmpty(smtpPass))
+    if (string.IsNullOrEmpty(resendKey) || string.IsNullOrEmpty(resendFrom))
     {
-        logger.LogError("[STARTUP] ❌ SMTP configuration is MISSING or incomplete in environment variables.");
+        logger.LogError("[STARTUP] ❌ Resend configuration is MISSING or incomplete in environment variables.");
     }
     else
     {
-        logger.LogInformation("[STARTUP] ✅ SMTP configuration loaded.");
-        logger.LogInformation($"[STARTUP] SMTP_HOST: {smtpHost}");
-        logger.LogInformation($"[STARTUP] SMTP_PORT: {smtpPort}");
-        logger.LogInformation($"[STARTUP] SMTP_EMAIL: {smtpEmail}");
-        
-        if (smtpPass.StartsWith("\"") || smtpPass.EndsWith("\""))
-        {
-            logger.LogWarning("[STARTUP] ⚠️ WARNING: SMTP_PASSWORD contains literal double-quotes. If this is an App Password, this will cause authentication to fail! Please remove quotes from your Render environment variables.");
-        }
+        logger.LogInformation("[STARTUP] ✅ Resend configuration loaded.");
+        logger.LogInformation($"[STARTUP] Resend_FromEmail: {resendFrom}");
     }
 
     var jwtKey = config["Jwt:Key"];
