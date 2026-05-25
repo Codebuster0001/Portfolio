@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Github } from 'lucide-react';
 
 import Hero from '../components/Hero';
+import SEO from '../components/common/SEO';
 
 import About from './About';
 import Projects from './Projects';
@@ -75,6 +76,10 @@ const Home = () => {
 
   return (
     <div className="relative w-full">
+      <SEO 
+        title="Codebuster | Full Stack Software Engineer Portfolio"
+        description="Explore Codebuster's software engineering portfolio showcasing high-performance enterprise applications, interactive user experiences, and secure APIs."
+      />
       <Hero />
 
       <section id="about" className="snap-start container mx-auto px-4 md:px-6 min-h-screen flex items-center justify-center">

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Github, ExternalLink, Calendar, Cpu, CheckCircle } from 'lucide-react';
 import { projectsData } from '../data/projects';
 import { Skeleton } from '../components/ui/Skeleton';
+import SEO from '../components/common/SEO';
 
 import axiosClient from '../utils/axiosClient';
 
@@ -106,6 +107,13 @@ export default function ProjectDetails() {
 
   return (
     <div className="min-h-screen bg-[#0b0f1a] pt-32 pb-24 text-white relative overflow-hidden">
+      <SEO 
+        title={`${project.title} | Codebuster Project`}
+        description={project.desc ? (project.desc.substring(0, 155) + '...') : `View details for the project ${project.title}`}
+        keywords={`${(project.tech || []).join(', ')}, ${project.title}, Codebuster Portfolio`}
+        image={project.image}
+        type="article"
+      />
       {/* Background radial gradients for Vercel/Linear look */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[150px]" />

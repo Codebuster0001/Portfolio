@@ -3,18 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation, Routes, Route, Navigate } from 'react-router-dom';
 import { Layers, Users, MessageCircle, Code2, LineChart, Settings } from 'lucide-react';
 
-import Sidebar from '../components/dashboard/Sidebar';
-import Navbar from '../components/dashboard/Navbar';
-const DashboardStats = React.lazy(() => import('../components/dashboard/DashboardStats'));
-const AnalyticsChart = React.lazy(() => import('../components/dashboard/Chart'));
-const ProjectTable = React.lazy(() => import('../components/dashboard/ProjectTable'));
-const MessageTable = React.lazy(() => import('../components/dashboard/MessageTable'));
-const AboutManager = React.lazy(() => import('../components/dashboard/AboutManager'));
-const HeroManager = React.lazy(() => import('../components/dashboard/HeroManager'));
-const ProjectsManager = React.lazy(() => import('../components/dashboard/ProjectsManager'));
-const SkillsManager = React.lazy(() => import('../components/dashboard/SkillsManager'));
-const ExperienceManager = React.lazy(() => import('../components/dashboard/ExperienceManager'));
-const ContactManager = React.lazy(() => import('../components/dashboard/ContactManager'));
+import Sidebar from '../components/layout/Sidebar';
+import Navbar from '../components/layout/Navbar';
+const DashboardStats = React.lazy(() => import('../features/dashboard/DashboardStats'));
+const AnalyticsChart = React.lazy(() => import('../features/dashboard/Chart'));
+const ProjectTable = React.lazy(() => import('../features/projects/ProjectTable'));
+const MessageTable = React.lazy(() => import('../features/contacts/MessageTable'));
+const AboutManager = React.lazy(() => import('../features/about/AboutManager'));
+const HeroManager = React.lazy(() => import('../features/hero/HeroManager'));
+const ProjectsManager = React.lazy(() => import('../features/projects/ProjectsManager'));
+const SkillsManager = React.lazy(() => import('../features/skills/SkillsManager'));
+const ExperienceManager = React.lazy(() => import('../features/experience/ExperienceManager'));
+const ContactManager = React.lazy(() => import('../features/contacts/ContactManager'));
 const ProjectDetails = React.lazy(() => import('./ProjectDetails'));
 
 export default function AdminDashboard({ onLogout }) {
