@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ChevronLeft, ChevronRight, Github, ExternalLink, Filter, ChevronDown, ArrowRight } from 'lucide-react';
 import { projectsData } from '../data/projects';
 import Dropdown from '../components/ui/Dropdown';
-import { Skeleton } from '../components/ui/Skeleton';
+import { Skeleton } from '../components/ui/skeleton';
 import SEO from '../components/common/SEO';
 
 import axiosClient from '../utils/axiosClient';

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from '@/components/ui/button';
 import { projectsData } from '../data/projects';
-import { Skeleton } from '../components/ui/Skeleton';
+import { Skeleton } from '../components/ui/skeleton';
 
 import axiosClient from '../utils/axiosClient';
 

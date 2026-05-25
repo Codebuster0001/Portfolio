@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Github, ExternalLink, Calendar, Cpu, CheckCircle } from 'lucide-react';
 import { projectsData } from '../data/projects';
-import { Skeleton } from '../components/ui/Skeleton';
+import { Skeleton } from '../components/ui/skeleton';
 import SEO from '../components/common/SEO';
 
 import axiosClient from '../utils/axiosClient';
