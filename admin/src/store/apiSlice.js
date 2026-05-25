@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({ 
   baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5225/api',
+  credentials: 'omit', // We only want credentials on the refresh endpoint or if CORS is explicitly configured for cookies
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('admin_token');
     if (token) {
@@ -13,10 +14,25 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
+  
   if (result.error && (result.error.status === 401 || result.error.originalStatus === 401)) {
-    localStorage.removeItem('admin_authenticated');
-    localStorage.removeItem('admin_token');
-    window.location.href = '/login';
+    // Attempt to refresh the token using the HttpOnly cookie
+    const refreshResult = await baseQuery(
+      { url: '/Auth/refresh', method: 'POST', credentials: 'include' }, 
+      api, 
+      extraOptions
+    );
+    
+    if (refreshResult.data?.token) {
+      // Store new access token and retry original request
+      localStorage.setItem('admin_token', refreshResult.data.token);
+      result = await baseQuery(args, api, extraOptions);
+    } else {
+      // Refresh failed, log out
+      localStorage.removeItem('admin_authenticated');
+      localStorage.removeItem('admin_token');
+      window.location.href = '/login';
+    }
   }
   return result;
 };
@@ -25,7 +41,7 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
   keepUnusedDataFor: 300, // Keep cached data for 5 minutes globally
-  tagTypes: ['AboutContent', 'AboutSkills', 'Stats', 'Hero', 'Projects', 'Experiences', 'Contacts'],
+  tagTypes: ['AboutContent', 'AboutSkills', 'Stats', 'Hero', 'Projects', 'Experiences', 'Contacts', 'Analytics'],
   endpoints: (builder) => ({
     // Auth Endpoints
     login: builder.mutation({
@@ -33,6 +49,14 @@ export const apiSlice = createApi({
         url: '/Auth/login',
         method: 'POST',
         body: credentials,
+        credentials: 'omit', // Ensure login cookie is set properly based on CORS
+      }),
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: '/Auth/logout',
+        method: 'POST',
+        credentials: 'include',
       }),
     }),
     forgotPassword: builder.mutation({
@@ -53,6 +77,12 @@ export const apiSlice = createApi({
       query: (token) => `/Auth/validate-reset-token?token=${token}`,
     }),
     
+    // Analytics Endpoint
+    getVisitorsCount: builder.query({
+      query: () => '/Analytics/visitors/count',
+      providesTags: ['Analytics'],
+    }),
+
     // Hero Section
     getHero: builder.query({
       query: () => '/Hero',
@@ -305,4 +335,6 @@ export const {
   useMarkContactAsReadMutation,
   useDeleteContactMutation,
   useReplyToContactMutation,
+  useGetVisitorsCountQuery,
+  useLogoutMutation,
 } = apiSlice;

@@ -53,12 +53,70 @@ namespace PortfolioBakend.Controllers
             if (!BCrypt.Net.BCrypt.Verify(password, hash))
                 return Unauthorized("Invalid password");
 
-            // 🔐 Generate JWT
-            var token = GenerateJwtToken(user["id"].ToString(), email);
+            // 🔐 Generate Tokens
+            var accessToken = GenerateJwtToken(user["id"].ToString(), email, int.Parse(_config["Jwt:ExpiryMinutes"] ?? "15"));
+            var refreshToken = GenerateJwtToken(user["id"].ToString(), email, 60 * 24 * 7); // 7 days
+
+            // Set HttpOnly Cookie for Refresh Token
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true, // Must be true in production (HTTPS)
+                SameSite = SameSiteMode.None, // Required for cross-origin if frontend/backend are separate
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+            Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
 
             sw.Stop();
             _logger.LogInformation("Login API completed in {ElapsedMs}ms", sw.ElapsedMilliseconds);
-            return Ok(new { token });
+            return Ok(new { token = accessToken });
+        }
+
+        // 🔄 REFRESH TOKEN
+        [HttpPost("refresh")]
+        public IActionResult Refresh()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (string.IsNullOrEmpty(refreshToken))
+                return Unauthorized(new { message = "No refresh token provided" });
+
+            try
+            {
+                var jwt = _config.GetSection("Jwt");
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"]));
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                tokenHandler.ValidateToken(refreshToken, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateIssuer = true,
+                    ValidIssuer = jwt["Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = jwt["Audience"],
+                    ValidateLifetime = true
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var userId = jwtToken.Claims.First(x => x.Type == "id").Value;
+                var email = jwtToken.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+
+                // Generate new access token
+                var newAccessToken = GenerateJwtToken(userId, email, int.Parse(jwt["ExpiryMinutes"] ?? "15"));
+                return Ok(new { token = newAccessToken });
+            }
+            catch
+            {
+                return Unauthorized(new { message = "Invalid or expired refresh token" });
+            }
+        }
+
+        // 🚪 LOGOUT
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("refreshToken", new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None });
+            return Ok(new { message = "Logged out successfully" });
         }
 
         // 🔐 FORGOT PASSWORD
@@ -227,7 +285,7 @@ namespace PortfolioBakend.Controllers
         }
 
         // 🔑 JWT Generator
-        private string GenerateJwtToken(string userId, string email)
+        private string GenerateJwtToken(string userId, string email, int expiryMinutes = 15)
         {
             var jwt = _config.GetSection("Jwt");
 
@@ -236,15 +294,15 @@ namespace PortfolioBakend.Controllers
 
             var claims = new[]
             {
-            new Claim("id", userId),
-            new Claim(ClaimTypes.Email, email)
-        };
+                new Claim("id", userId),
+                new Claim(ClaimTypes.Email, email)
+            };
 
             var token = new JwtSecurityToken(
                 issuer: jwt["Issuer"],
                 audience: jwt["Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(int.Parse(jwt["ExpiryMinutes"])),
+                expires: DateTime.UtcNow.AddMinutes(expiryMinutes),
                 signingCredentials: creds
             );
 

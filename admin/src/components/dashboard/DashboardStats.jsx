@@ -4,9 +4,9 @@ import StatCard from './StatCard';
 import { 
   useGetProjectsQuery, 
   useGetContactsQuery, 
-  useGetAboutSkillsQuery 
+  useGetAboutSkillsQuery, 
+  useGetVisitorsCountQuery 
 } from '../../store/apiSlice';
-import { supabase } from '../../lib/supabase';
 
 const DashboardStats = React.memo(function DashboardStats() {
   const { data: projectsData, isLoading: loadingProjects } = useGetProjectsQuery();
@@ -19,27 +19,8 @@ const DashboardStats = React.memo(function DashboardStats() {
 
   const unreadMessages = React.useMemo(() => messages.filter(m => !m.isRead).length, [messages]);
 
-  const [totalVisitors, setTotalVisitors] = React.useState(0);
-  const [loadingVisitors, setLoadingVisitors] = React.useState(true);
-
-  React.useEffect(() => {
-    async function fetchVisitorsCount() {
-      try {
-        const { count, error } = await supabase
-          .from('visitors')
-          .select('*', { count: 'exact', head: true });
-        
-        if (!error && count !== null) {
-          setTotalVisitors(count);
-        }
-      } catch (err) {
-        console.error("Failed to fetch visitors:", err);
-      } finally {
-        setLoadingVisitors(false);
-      }
-    }
-    fetchVisitorsCount();
-  }, []);
+  const { data: visitorsData, isLoading: loadingVisitors } = useGetVisitorsCountQuery();
+  const totalVisitors = visitorsData?.count || 0;
 
   const visitorsTrend = "Real-time tracker";
 
