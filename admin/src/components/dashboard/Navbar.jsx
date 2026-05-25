@@ -6,6 +6,8 @@ const TAB_TITLES = {
   home: 'Dashboard',
   hero: 'Hero Section',
   about: 'About',
+  skills: 'Skills',
+  experience: 'Experience',
   projects: 'Projects',
   messages: 'Messages',
   analytics: 'Analytics',
