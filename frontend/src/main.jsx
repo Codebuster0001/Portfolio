@@ -5,13 +5,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { HelmetProvider } from 'react-helmet-async';
+import ErrorBoundary from './components/common/ErrorBoundary.jsx';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <HelmetProvider>
       <BrowserRouter>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </BrowserRouter>
     </HelmetProvider>
   </Provider>,
 )
+
