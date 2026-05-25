@@ -1,10 +1,10 @@
 using System;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 
 namespace PortfolioBakend.Services
 {
@@ -17,7 +17,6 @@ namespace PortfolioBakend.Services
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<EmailService> _logger;
-        private static readonly HttpClient _httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(15) };
 
         public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
         {
@@ -29,45 +28,37 @@ namespace PortfolioBakend.Services
         {
             try
             {
-                var apiKey = _configuration["BrevoApiKey"];
-                var senderEmail = _configuration["SmtpSettings:Email"];
-                var senderName = "Deepak Kushwaha";
-                
-                // If they haven't set up Brevo yet, fail gracefully and fast!
-                if (string.IsNullOrEmpty(apiKey))
+                var smtpHost = _configuration["SmtpSettings:Host"];
+                var smtpPortStr = _configuration["SmtpSettings:Port"];
+                var smtpEmail = _configuration["SmtpSettings:Email"];
+                var smtpPass = _configuration["SmtpSettings:Password"];
+
+                if (string.IsNullOrEmpty(smtpHost) || string.IsNullOrEmpty(smtpEmail))
                 {
-                    _logger.LogWarning("BrevoApiKey is not configured. Email to {To} was skipped.", to);
+                    _logger.LogWarning("SMTP is not configured properly. Email to {To} was skipped.", to);
                     return false;
                 }
 
-                var payload = new
-                {
-                    sender = new { name = senderName, email = senderEmail },
-                    to = new[] { new { email = to } },
-                    subject = subject,
-                    htmlContent = htmlMessage
-                };
+                int.TryParse(smtpPortStr, out int smtpPort);
+                if (smtpPort == 0) smtpPort = 587; // default
 
-                var jsonPayload = JsonSerializer.Serialize(payload);
-                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Portfolio Admin", smtpEmail));
+                message.To.Add(MailboxAddress.Parse(to));
+                message.Subject = subject;
 
-                var request = new HttpRequestMessage(HttpMethod.Post, "https://api.brevo.com/v3/smtp/email");
-                request.Headers.Add("api-key", apiKey);
-                request.Content = content;
+                var bodyBuilder = new BodyBuilder { HtmlBody = htmlMessage };
+                message.Body = bodyBuilder.ToMessageBody();
 
-                var response = await _httpClient.SendAsync(request);
+                using var client = new SmtpClient();
+                // Enable STARTTLS connection
+                await client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
+                await client.AuthenticateAsync(smtpEmail, smtpPass);
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    _logger.LogInformation("Email successfully sent to {To} via Brevo API", to);
-                    return true;
-                }
-                else
-                {
-                    var errorResponse = await response.Content.ReadAsStringAsync();
-                    _logger.LogError("Brevo API returned {StatusCode}: {Error}", response.StatusCode, errorResponse);
-                    return false;
-                }
+                _logger.LogInformation("Email successfully sent to {To}", to);
+                return true;
             }
             catch (Exception ex)
             {
