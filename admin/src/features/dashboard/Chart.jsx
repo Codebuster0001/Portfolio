@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
 } from 'recharts';
+import { useTheme } from '@/context/ThemeProvider';
 
 const dummyData = {
   daily: [
@@ -40,10 +41,10 @@ const dummyData = {
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white dark:bg-zinc-900/90 border border-slate-300 dark:border-white/10 p-3 rounded-lg shadow-xl backdrop-blur-md">
-        <p className="text-slate-500 dark:text-zinc-400 text-xs mb-1 font-semibold">{label}</p>
-        <p className="text-blue-400 font-bold">
-          {payload[0].value} <span className="text-slate-400 dark:text-zinc-500 font-normal text-xs ml-1">visitors</span>
+      <div className="bg-[#FCFCFD] dark:bg-[#111217] border border-[#E2E8F0] dark:border-white/10 p-3 rounded-xl shadow-xl backdrop-blur-md">
+        <p className="text-[#64748B] dark:text-zinc-400 text-xs mb-1 font-semibold">{label}</p>
+        <p className="text-blue-500 font-bold">
+          {payload[0].value} <span className="text-[#64748B] dark:text-zinc-500 font-normal text-xs ml-1">visitors</span>
         </p>
       </div>
     );
@@ -53,30 +54,37 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export default function AnalyticsChart() {
   const [filter, setFilter] = useState('monthly');
+  const { theme } = useTheme();
+
+  const gridStroke = theme === 'light' ? 'rgba(15,23,42,0.05)' : 'rgba(255,255,255,0.05)';
+  const axisColor = theme === 'light' ? '#64748B' : '#a1a1aa';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="bg-white/50 dark:bg-white dark:bg-zinc-900/50 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-xl w-full"
+      className="bg-[#FCFCFD] dark:bg-[#111217] border border-[#E2E8F0] dark:border-white/5 rounded-3xl p-6 shadow-lg w-full transition-colors duration-300"
     >
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white">Visitors Analytics</h2>
-          <p className="text-sm text-slate-500 dark:text-zinc-400">Track your portfolio traffic over time</p>
+          <h2 className="text-lg font-bold text-[#0F172A] dark:text-white">Visitors Analytics</h2>
+          <p className="text-sm text-[#64748B] dark:text-zinc-400">Track your portfolio traffic over time</p>
         </div>
-        <div className="flex bg-slate-50 dark:bg-zinc-950 rounded-lg p-1 border border-slate-200 dark:border-white/5">
+        <div className="flex bg-[#F8FAFC] dark:bg-zinc-950 rounded-xl p-1 border border-[#E2E8F0] dark:border-white/5 shadow-inner">
           {['daily', 'monthly', 'yearly'].map((f) => (
-            <button
+            <motion.button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-md text-xs font-semibold capitalize transition-all ${
-                filter === f ? 'bg-blue-600/20 text-blue-400' : 'text-slate-400 dark:text-zinc-500 hover:text-zinc-300'
+              whileTap={{ scale: 0.95 }}
+              className={`px-4 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all duration-250 ${
+                filter === f 
+                  ? 'bg-blue-600/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 font-bold shadow-sm' 
+                  : 'text-[#64748B] dark:text-zinc-500 hover:text-[#0F172A] dark:hover:text-zinc-300'
               }`}
             >
               {f}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
@@ -89,35 +97,35 @@ export default function AnalyticsChart() {
           >
             <defs>
               <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} vertical={false} />
             <XAxis 
               dataKey="name" 
-              stroke="#71717a" 
+              stroke={axisColor} 
               fontSize={12} 
               tickLine={false} 
               axisLine={false} 
               dy={10}
             />
             <YAxis 
-              stroke="#71717a" 
+              stroke={axisColor} 
               fontSize={12} 
               tickLine={false} 
               axisLine={false} 
               tickFormatter={(value) => value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value}
             />
-            <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255,255,255,0.1)', strokeWidth: 1 }} />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: theme === 'light' ? 'rgba(15,23,42,0.1)' : 'rgba(255,255,255,0.1)', strokeWidth: 1 }} />
             <Area 
               type="monotone" 
               dataKey="visitors" 
-              stroke="#3b82f6" 
+              stroke="#3B82F6" 
               strokeWidth={3}
               fillOpacity={1} 
               fill="url(#colorVisitors)" 
-              activeDot={{ r: 6, fill: "#a855f7", stroke: "#fff", strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: "#3B82F6", stroke: theme === 'light' ? "#fff" : "#111217", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>

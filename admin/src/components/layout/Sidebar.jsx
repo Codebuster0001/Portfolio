@@ -30,27 +30,20 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
           return (
-            <button
+            <motion.button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-300 relative group ${
-                isActive ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white hover:bg-white/5'
+              whileHover={{ x: 5 }}
+              whileTap={{ scale: 0.98 }}
+              className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-300 relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                isActive 
+                  ? 'bg-blue-500/10 border-l-4 border-blue-500 text-blue-600 dark:text-blue-400 font-semibold' 
+                  : 'text-[#64748B] dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-100 hover:bg-slate-100 dark:hover:bg-zinc-800'
               }`}
             >
-              {isActive && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/20 rounded-xl"
-                  initial={false}
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                />
-              )}
-              <Icon className={`w-5 h-5 relative z-10 transition-colors ${isActive ? 'text-blue-400' : 'group-hover:text-blue-400'}`} />
-              <span className="relative z-10">{item.label}</span>
-              {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-500 rounded-r-full shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
-              )}
-            </button>
+              <Icon className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-blue-500 dark:text-blue-400' : 'group-hover:text-blue-500 dark:group-hover:text-blue-400'}`} />
+              <span>{item.label}</span>
+            </motion.button>
           );
         })}
       </nav>

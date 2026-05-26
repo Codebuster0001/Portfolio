@@ -112,13 +112,13 @@ export default function AdminDashboard({ onLogout }) {
   };
 
   return (
-    <div className="relative flex h-screen bg-slate-200/50 dark:bg-[#08080c] text-slate-900 dark:text-zinc-100 overflow-hidden selection:bg-blue-500/30">
+    <div className="relative flex h-screen bg-[#F5F7FB] dark:bg-[#08080C] text-[#0F172A] dark:text-zinc-100 overflow-hidden selection:bg-blue-500/30 transition-colors duration-300">
       {/* Background glow effects */}
       <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex w-64 flex-col bg-slate-100/90 dark:bg-zinc-950/80 backdrop-blur-2xl border-r border-slate-200 dark:border-white/5 z-40">
+      <aside className="hidden md:flex w-64 flex-col bg-[#F1F5F9] dark:bg-[#0D0E14] backdrop-blur-2xl border-r border-[#E2E8F0] dark:border-white/5 z-40 transition-colors duration-300">
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       </aside>
 
@@ -157,7 +157,7 @@ export default function AdminDashboard({ onLogout }) {
               animate={{ x: 0 }}
               exit={{ x: -300 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="w-64 h-full bg-slate-100/90 dark:bg-zinc-950 border-r border-slate-200 dark:border-white/5"
+              className="w-64 h-full bg-[#F1F5F9] dark:bg-[#0D0E14] border-r border-[#E2E8F0] dark:border-white/5 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <Sidebar
