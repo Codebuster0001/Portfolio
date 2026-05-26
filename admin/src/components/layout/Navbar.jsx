@@ -20,7 +20,7 @@ export default function Navbar({ activeTabTitle, onLogout, onOpenSidebar }) {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="h-20 px-4 md:px-8 flex items-center justify-between bg-slate-50 dark:bg-zinc-950/50 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 sticky top-0 z-30">
+    <header className="h-20 px-4 md:px-8 flex items-center justify-between bg-slate-100/90 dark:bg-zinc-950/50 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 sticky top-0 z-30">
       <div className="flex items-center gap-4 md:gap-6 flex-1">
         <button 
           onClick={onOpenSidebar}
