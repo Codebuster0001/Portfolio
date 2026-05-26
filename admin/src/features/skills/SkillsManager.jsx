@@ -94,8 +94,8 @@ const CategorySection = ({ category, onEditCat, onDeleteCat, onAddSkill, onEditS
     <div className={`rounded-2xl border ${border} bg-white dark:bg-zinc-900/60 backdrop-blur-sm overflow-hidden`}>
       {/* Header */}
       <div className="flex items-center gap-3 p-4">
-        <div className="p-2 rounded-xl bg-slate-100 dark:bg-zinc-800/60 border border-zinc-700/50 flex-shrink-0">
-          <DynamicIcon iconName={category.iconName} iconLibrary={category.iconLibrary} size={16} className="text-zinc-300" />
+        <div className="p-2.5 rounded-xl bg-[#F1F5F9] dark:bg-zinc-950/50 border border-[#E2E8F0] dark:border-white/5 flex-shrink-0 shadow-inner">
+          <DynamicIcon iconName={category.iconName} iconLibrary={category.iconLibrary} size={16} className="text-blue-600 dark:text-blue-400" />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-slate-900 dark:text-white truncate text-sm">{category.title}</h3>
