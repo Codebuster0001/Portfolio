@@ -207,14 +207,19 @@ export default function ExperienceManager() {
       )}
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl w-full max-w-2xl shadow-2xl relative my-8">
-            <div className="sticky top-0 bg-white dark:bg-zinc-900 border-b border-slate-200 dark:border-zinc-800 p-6 flex justify-between items-center rounded-t-2xl z-10">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">{editingId ? 'Edit Experience' : 'Add Experience'}</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors"><X size={24} /></button>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="bg-[#FCFCFD] dark:bg-[#111217] border border-[#E2E8F0] dark:border-zinc-800 rounded-3xl w-full max-w-2xl shadow-2xl relative max-h-[90vh] flex flex-col overflow-hidden"
+          >
+            <div className="sticky top-0 bg-[#FCFCFD] dark:bg-[#111217] border-b border-[#E2E8F0] dark:border-zinc-850 p-6 flex justify-between items-center rounded-t-3xl z-10 shrink-0">
+              <h3 className="text-xl font-bold text-[#0F172A] dark:text-white">{editingId ? 'Edit Experience' : 'Add Experience'}</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-[#64748B] dark:text-zinc-500 hover:text-[#0F172A] dark:text-white transition-colors"><X size={24} /></button>
             </div>
             
-            <form onSubmit={handleSave} className="p-6 space-y-6">
+            <form onSubmit={handleSave} className="p-6 space-y-6 overflow-y-auto flex-1 custom-scrollbar">
               <div className="grid grid-cols-2 gap-4">
                 <Fld label="Role *"><input required value={form.role} onChange={e => setForm({ ...form, role: e.target.value })} placeholder="Senior Developer" className={inp} /></Fld>
                 <Fld label="Company *"><input required value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} placeholder="Tech Corp" className={inp} /></Fld>
@@ -228,30 +233,30 @@ export default function ExperienceManager() {
 
               {/* Skills */}
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-slate-500 dark:text-zinc-400">Skills Used</label>
+                <label className="block text-sm font-semibold text-[#64748B] dark:text-zinc-400">Skills Used</label>
                 <div className="flex gap-2">
                   <input value={skillInput} onChange={e => setSkillInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addSkill())} placeholder="Add a skill and press Enter" className={inp} />
-                  <button type="button" onClick={addSkill} className="px-4 bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl">Add</button>
+                  <button type="button" onClick={addSkill} className="px-4 bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-700 text-slate-800 dark:text-white font-medium rounded-xl border border-transparent hover:border-slate-200 dark:hover:border-zinc-600 transition-all">Add</button>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {(form.skills || []).map((skill, i) => (
-                    <span key={i} className="flex items-center gap-1 px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-sm">
-                      {skill} <button type="button" onClick={() => removeSkill(skill)} className="hover:text-red-400 ml-1"><X size={14} /></button>
+                    <span key={i} className="flex items-center gap-1 px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-500 dark:text-blue-400 rounded-lg text-sm font-semibold">
+                      {skill} <button type="button" onClick={() => removeSkill(skill)} className="hover:text-red-500 ml-1"><X size={14} /></button>
                     </span>
                   ))}
                 </div>
               </div>
 
               {/* Icons & Colors */}
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-zinc-950/50 border border-slate-200 dark:border-zinc-800/80 space-y-4">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-zinc-800/80 space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   <Fld label="Icon Name"><input value={form.iconName || ''} onChange={e => setForm({ ...form, iconName: e.target.value })} placeholder="Code" className={inp} /></Fld>
                   <Fld label="Library">
                     <select value={form.iconLibrary || ''} onChange={e => setForm({ ...form, iconLibrary: e.target.value })} className={inp}>
                       <option value="lucide-react">Lucide</option><option value="fa">FontAwesome</option><option value="si">SimpleIcons</option>
                     </select>
                   </Fld>
-                  <Fld label="Color"><input type="color" value={form.iconColor || '#3b82f6'} onChange={e => setForm({ ...form, iconColor: e.target.value })} className="w-full h-11 p-1 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-700 cursor-pointer" /></Fld>
+                  <Fld label="Color"><input type="color" value={form.iconColor || '#3b82f6'} onChange={e => setForm({ ...form, iconColor: e.target.value })} className="w-full h-11 p-1 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-750 cursor-pointer" /></Fld>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Fld label="Gradient From (Hex)"><input value={form.gradientFrom || ''} onChange={e => setForm({ ...form, gradientFrom: e.target.value })} placeholder="#3b82f6" className={inp} /></Fld>
@@ -259,19 +264,19 @@ export default function ExperienceManager() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-4 border border-slate-200 dark:border-zinc-800 rounded-xl bg-white/50 dark:bg-white dark:bg-zinc-900/50 cursor-pointer" onClick={() => setForm(f => ({ ...f, isCurrent: !f.isCurrent }))}>
-                <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors ${form.isCurrent ? 'bg-blue-500 border-blue-500 text-white' : 'border-zinc-600'}`}>
-                  {form.isCurrent && <span className="text-sm">✓</span>}
+              <div className="flex items-center gap-3 p-4 border border-slate-200 dark:border-zinc-800 rounded-xl bg-white/30 dark:bg-zinc-900/30 cursor-pointer" onClick={() => setForm(f => ({ ...f, isCurrent: !f.isCurrent }))}>
+                <div className={`w-6 h-6 rounded border flex items-center justify-center transition-all ${form.isCurrent ? 'bg-blue-500 border-blue-500 text-white' : 'border-zinc-500 dark:border-zinc-700'}`}>
+                  {form.isCurrent && <span className="text-sm font-bold">✓</span>}
                 </div>
-                <div><div className="text-slate-900 dark:text-white font-medium">Current Role</div><div className="text-xs text-slate-400 dark:text-zinc-500">Highlight this as your present job</div></div>
+                <div><div className="text-[#0F172A] dark:text-white font-semibold">Current Role</div><div className="text-xs text-[#64748B] dark:text-zinc-500">Highlight this as your present job</div></div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-zinc-800">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 rounded-xl text-zinc-300 hover:bg-slate-100 dark:bg-zinc-800 font-medium transition-colors">Cancel</button>
-                <button type="submit" className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors"><Save size={18} /> Save</button>
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-zinc-800 shrink-0">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 font-semibold border border-transparent hover:border-slate-200 dark:hover:border-zinc-700 transition-all focus:outline-none">Cancel</button>
+                <button type="submit" className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-lg shadow-blue-500/20 focus:outline-none"><Save size={18} /> Save</button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>

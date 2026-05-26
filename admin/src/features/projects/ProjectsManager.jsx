@@ -498,7 +498,7 @@ export default function ProjectsManager() {
                   <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                     <Button 
                       onClick={() => handleEdit(proj)}
-                      className="bg-zinc-850 hover:bg-slate-100 dark:bg-zinc-800 text-white rounded-lg text-[11px] font-semibold h-8 px-3 gap-1.5"
+                      className="border border-slate-300 dark:border-[#27272a] bg-[#FCFCFD] dark:bg-[#111217] text-[#0F172A] dark:text-zinc-100 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-lg text-[11px] font-semibold h-8 px-3 gap-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-blue-500"
                     >
                       <Edit2 className="w-3.5 h-3.5" /> Edit details
                     </Button>
@@ -735,7 +735,7 @@ export default function ProjectsManager() {
               type="button"
               onClick={() => setMode('list')}
               variant="outline"
-              className="border-slate-200 dark:border-zinc-800 hover:bg-zinc-850 text-white rounded-full px-6 font-semibold"
+              className="border-slate-300 dark:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-800 text-[#0F172A] dark:text-zinc-100 rounded-full px-6 font-semibold transition-all focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               Cancel
             </Button>
