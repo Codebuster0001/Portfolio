@@ -253,46 +253,46 @@ export default function HeroManager() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Your Full Name</label>
-            <Input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Deepak Kushwaha" />
+            <Input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="Deepak Kushwaha" />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Professional Role Title</label>
-            <Input value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Full Stack Engineer" />
+            <Input value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="Full Stack Engineer" />
           </div>
         </div>
 
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">About Description</label>
-          <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white min-h-24" placeholder="Briefly describe your profile focus..." />
+          <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white min-h-24" placeholder="Briefly describe your profile focus..." />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Availability Status</label>
-            <Input value={form.availabilityStatus} onChange={e => setForm(f => ({ ...f, availabilityStatus: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Available for new opportunities" />
+            <Input value={form.availabilityStatus} onChange={e => setForm(f => ({ ...f, availabilityStatus: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="Available for new opportunities" />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> GitHub URL</label>
-            <Input value={form.githubUrl} onChange={e => setForm(f => ({ ...f, githubUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://github.com/..." />
+            <Input value={form.githubUrl} onChange={e => setForm(f => ({ ...f, githubUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="https://github.com/..." />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> LinkedIn URL</label>
-            <Input value={form.linkedinUrl} onChange={e => setForm(f => ({ ...f, linkedinUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://linkedin.com/in/..." />
+            <Input value={form.linkedinUrl} onChange={e => setForm(f => ({ ...f, linkedinUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="https://linkedin.com/in/..." />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Twitter URL</label>
-            <Input value={form.twitterUrl} onChange={e => setForm(f => ({ ...f, twitterUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://twitter.com/..." />
+            <Input value={form.twitterUrl} onChange={e => setForm(f => ({ ...f, twitterUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="https://twitter.com/..." />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Instagram URL</label>
-            <Input value={form.instagramUrl} onChange={e => setForm(f => ({ ...f, instagramUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://instagram.com/..." />
+            <Input value={form.instagramUrl} onChange={e => setForm(f => ({ ...f, instagramUrl: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="https://instagram.com/..." />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-2"><Link2 className="w-4 h-4" /> Gmail Address</label>
-            <Input value={form.gmailAddress} onChange={e => setForm(f => ({ ...f, gmailAddress: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="youremail@gmail.com" />
+            <Input value={form.gmailAddress} onChange={e => setForm(f => ({ ...f, gmailAddress: e.target.value }))} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="youremail@gmail.com" />
           </div>
         </div>
       </div>
@@ -462,7 +462,7 @@ export default function HeroManager() {
           <p className="text-sm text-slate-500 dark:text-zinc-400">Add or manage key engineering keywords displayed on your landing page.</p>
         </div>
         <div className="flex gap-2">
-          <Input value={newTech} onChange={e => setNewTech(e.target.value)} onKeyDown={e => e.key === 'Enter' && addTech()} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="Add skill (e.g. Next.js, QuestPDF)" />
+          <Input value={newTech} onChange={e => setNewTech(e.target.value)} onKeyDown={e => e.key === 'Enter' && addTech()} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="Add skill (e.g. Next.js, QuestPDF)" />
           <Button onClick={addTech} className="bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-700 text-white font-semibold flex items-center gap-1.5"><Plus className="w-4 h-4" /> Add</Button>
         </div>
         <div className="flex flex-wrap gap-2 pt-2">

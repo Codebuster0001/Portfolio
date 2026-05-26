@@ -119,7 +119,7 @@ export default function ContactManager() {
                 placeholder="Search by name, email, or message..."
                 value={search}
                 onChange={handleSearch}
-                className="w-full bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="w-full bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
               />
             </div>
             <select
@@ -269,7 +269,7 @@ export default function ContactManager() {
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     placeholder="Type your reply here..."
-                    className="w-full bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors mb-3 resize-none"
+                    className="w-full bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-lg p-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors mb-3 resize-none"
                   />
                   <button
                     onClick={handleSendReply}

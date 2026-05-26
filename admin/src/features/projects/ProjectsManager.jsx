@@ -528,33 +528,33 @@ export default function ProjectsManager() {
             <div className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Project Title <span className="text-red-500">*</span></label>
-                <Input value={form.title} onChange={e => setForm({...form, title: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="e.g. Stripe E-Commerce Suite" required />
+                <Input value={form.title} onChange={e => setForm({...form, title: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="e.g. Stripe E-Commerce Suite" required />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Category</label>
-                  <Input value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="e.g. Web App, Mobile" />
+                  <Input value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="e.g. Web App, Mobile" />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider font-mono">Date</label>
-                  <Input type="date" value={form.projectDate} onChange={e => setForm({...form, projectDate: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" />
+                  <Input type="date" value={form.projectDate} onChange={e => setForm({...form, projectDate: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Description <span className="text-red-500">*</span></label>
-                <Textarea rows={6} value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white leading-relaxed" placeholder="Detailed architectural and capability description of this software solution..." required />
+                <Textarea rows={6} value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white leading-relaxed" placeholder="Detailed architectural and capability description of this software solution..." required />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1"><GithubIcon className="w-3.5 h-3.5" /> GitHub Url</label>
-                  <Input value={form.githubUrl} onChange={e => setForm({...form, githubUrl: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://github.com/user/repo" />
+                  <Input value={form.githubUrl} onChange={e => setForm({...form, githubUrl: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="https://github.com/user/repo" />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1"><Globe className="w-3.5 h-3.5" /> Live Site Url</label>
-                  <Input value={form.liveUrl} onChange={e => setForm({...form, liveUrl: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-white" placeholder="https://yourproject.com" />
+                  <Input value={form.liveUrl} onChange={e => setForm({...form, liveUrl: e.target.value})} className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white" placeholder="https://yourproject.com" />
                 </div>
               </div>
 
@@ -688,7 +688,7 @@ export default function ProjectsManager() {
                     value={newTech} 
                     onChange={e => setNewTech(e.target.value)} 
                     onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addTech(); } }}
-                    className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9" 
+                    className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white h-9" 
                     placeholder="Press Enter to add tag (e.g. Redux)" 
                   />
                   <Button type="button" onClick={addTech} className="bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-750 text-white h-9">Add</Button>
@@ -711,7 +711,7 @@ export default function ProjectsManager() {
                     value={newFeature} 
                     onChange={e => setNewFeature(e.target.value)} 
                     onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addFeature(); } }}
-                    className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9" 
+                    className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white h-9" 
                     placeholder="Add bullet (e.g. Real-time websocket sync)" 
                   />
                   <Button type="button" onClick={addFeature} className="bg-slate-100 dark:bg-zinc-800 hover:bg-zinc-750 text-white h-9">Add</Button>

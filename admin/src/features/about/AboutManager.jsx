@@ -101,7 +101,7 @@ export default function AboutManager() {
               <Input 
                 value={contentForm.title} 
                 onChange={(e) => setContentForm({...contentForm, title: e.target.value})} 
-                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-white" 
+                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-slate-900 dark:text-white" 
               />
             </div>
             <div className="space-y-1.5">
@@ -109,7 +109,7 @@ export default function AboutManager() {
               <Input 
                 value={contentForm.subtitle} 
                 onChange={(e) => setContentForm({...contentForm, subtitle: e.target.value})} 
-                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-white" 
+                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-slate-900 dark:text-white" 
               />
             </div>
             <div className="space-y-1.5">
@@ -118,7 +118,7 @@ export default function AboutManager() {
                 rows={4} 
                 value={contentForm.description} 
                 onChange={(e) => setContentForm({...contentForm, description: e.target.value})} 
-                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-white" 
+                className="bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800/50 text-slate-900 dark:text-white" 
               />
             </div>
             <Button 
@@ -144,11 +144,11 @@ export default function AboutManager() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-slate-50 dark:bg-zinc-950/50 p-4 rounded-xl border border-slate-200 dark:border-white/5">
           <div className="space-y-1.5">
             <label className="text-xs text-slate-400 dark:text-zinc-500">Title</label>
-            <Input value={newSkill.title} onChange={e => setNewSkill({...newSkill, title: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Clean Code" />
+            <Input value={newSkill.title} onChange={e => setNewSkill({...newSkill, title: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white h-9 text-sm" placeholder="e.g. Clean Code" />
           </div>
           <div className="space-y-1.5 md:col-span-2">
             <label className="text-xs text-slate-400 dark:text-zinc-500">Description</label>
-            <Input value={newSkill.description} onChange={e => setNewSkill({...newSkill, description: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Writing maintainable software" />
+            <Input value={newSkill.description} onChange={e => setNewSkill({...newSkill, description: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white h-9 text-sm" placeholder="e.g. Writing maintainable software" />
           </div>
           <Button onClick={handleAddSkill} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white h-9">
             <Plus className="w-4 h-4 mr-1" /> Add Skill
@@ -192,15 +192,15 @@ export default function AboutManager() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end bg-slate-50 dark:bg-zinc-950/50 p-4 rounded-xl border border-slate-200 dark:border-white/5">
           <div className="space-y-1.5">
             <label className="text-xs text-slate-400 dark:text-zinc-500">Label</label>
-            <Input value={newStat.label} onChange={e => setNewStat({...newStat, label: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. Projects" />
+            <Input value={newStat.label} onChange={e => setNewStat({...newStat, label: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white h-9 text-sm" placeholder="e.g. Projects" />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs text-slate-400 dark:text-zinc-500">Value (Number)</label>
-            <Input type="number" value={newStat.value} onChange={e => setNewStat({...newStat, value: parseInt(e.target.value) || 0})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" />
+            <Input type="number" value={newStat.value} onChange={e => setNewStat({...newStat, value: parseInt(e.target.value) || 0})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white h-9 text-sm" />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs text-slate-400 dark:text-zinc-500">Suffix</label>
-            <Input value={newStat.suffix} onChange={e => setNewStat({...newStat, suffix: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-white h-9 text-sm" placeholder="e.g. +" />
+            <Input value={newStat.suffix} onChange={e => setNewStat({...newStat, suffix: e.target.value})} className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white h-9 text-sm" placeholder="e.g. +" />
           </div>
           <Button onClick={handleAddStat} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white h-9">
             <Plus className="w-4 h-4 mr-1" /> Add Stat
