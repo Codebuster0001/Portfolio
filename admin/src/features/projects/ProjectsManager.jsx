@@ -477,11 +477,10 @@ export default function ProjectsManager() {
                           </span>
                         )}
                       </div>
-                      <p className="text-slate-500 dark:text-zinc-400 text-[11px] line-clamp-1 leading-relaxed max-w-xl pr-2">{proj.description}</p>
-                      
+                      <p className="text-[#64748B] dark:text-zinc-400 text-[11px] line-clamp-1 leading-relaxed max-w-xl pr-2">{proj.description}</p>
                       <div className="flex flex-wrap gap-1">
                         {proj.techStack?.slice(0, 5).map((tech, i) => (
-                          <span key={i} className="px-1.5 py-0.5 text-[9px] font-semibold text-zinc-300 bg-slate-100/50 dark:bg-slate-100 dark:bg-zinc-800/50 rounded border border-slate-200 dark:border-white/5">
+                          <span key={i} className="px-2 py-0.5 text-[9px] font-semibold text-[#64748B] dark:text-zinc-300 bg-[#F1F5F9] dark:bg-zinc-800 rounded-md border border-[#E2E8F0] dark:border-white/5 transition-all">
                             {tech}
                           </span>
                         ))}

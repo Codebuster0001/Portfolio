@@ -41,27 +41,27 @@ const SortableSkillRow = ({ skill, onEdit, onDelete }) => {
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.4 : 1 };
   return (
     <div ref={setNodeRef} style={style}
-      className="flex items-center gap-3 p-3 rounded-xl bg-slate-100/50 dark:bg-slate-100 dark:bg-zinc-800/50 border border-zinc-700/40 group hover:border-zinc-600/60 transition-colors"
+      className="flex items-center gap-3 p-3 rounded-xl bg-[#FCFCFD] dark:bg-[#111217] border border-[#E2E8F0] dark:border-white/5 group hover:border-blue-500/40 hover:shadow-md transition-all duration-300 shadow-sm"
     >
-      <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-zinc-600 hover:text-slate-500 dark:text-zinc-400 flex-shrink-0">
+      <button {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing text-[#94A3B8] hover:text-[#64748B] dark:text-zinc-500 dark:hover:text-zinc-400 flex-shrink-0">
         <GripVertical className="w-4 h-4" />
       </button>
-      <div className="w-8 h-8 rounded-lg bg-zinc-700/50 flex items-center justify-center flex-shrink-0">
-        <DynamicIcon iconName={skill.iconName} iconLibrary={skill.iconLibrary} size={14} className={skill.iconColor || 'text-blue-400'} />
+      <div className="w-8 h-8 rounded-lg bg-[#F8FAFC] dark:bg-zinc-950/50 flex items-center justify-center border border-[#E2E8F0] dark:border-white/5 shadow-inner flex-shrink-0">
+        <DynamicIcon iconName={skill.iconName} iconLibrary={skill.iconLibrary} size={14} className={skill.iconColor || 'text-blue-500'} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-zinc-200 truncate">{skill.skillName}</p>
-        <p className="text-[10px] text-slate-400 dark:text-zinc-500 truncate">{skill.iconLibrary}/{skill.iconName}</p>
+        <p className="text-sm font-bold text-[#0F172A] dark:text-zinc-100 truncate">{skill.skillName}</p>
+        <p className="text-[10px] text-[#94A3B8] dark:text-zinc-500 truncate">{skill.iconLibrary}/{skill.iconName}</p>
       </div>
       <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
-        <div className="w-20 h-1 bg-zinc-700 rounded-full overflow-hidden">
+        <div className="w-20 h-1.5 bg-[#E2E8F0] dark:bg-zinc-950 rounded-full overflow-hidden">
           <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" style={{ width: `${skill.proficiency}%` }} />
         </div>
-        <span className="text-[10px] text-slate-400 dark:text-zinc-500 w-8 text-right">{skill.proficiency}%</span>
+        <span className="text-[10px] text-[#64748B] dark:text-zinc-450 w-8 text-right font-bold">{skill.proficiency}%</span>
       </div>
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-        <button onClick={() => onEdit(skill)} className="p-1.5 rounded-lg hover:bg-blue-500/20 text-slate-500 dark:text-zinc-400 hover:text-blue-400 transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
-        <button onClick={() => onDelete(skill.id)} className="p-1.5 rounded-lg hover:bg-red-500/20 text-slate-500 dark:text-zinc-400 hover:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+        <button onClick={() => onEdit(skill)} className="p-1.5 rounded-lg hover:bg-blue-500/10 text-[#64748B] dark:text-zinc-400 hover:text-blue-500 transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
+        <button onClick={() => onDelete(skill.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-[#64748B] dark:text-zinc-400 hover:text-red-500 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
       </div>
     </div>
   );
@@ -124,12 +124,13 @@ const CategorySection = ({ category, onEditCat, onDeleteCat, onAddSkill, onEditS
                 </SortableContext>
               </DndContext>
               {skills.length === 0 && <p className="text-center text-xs text-zinc-600 py-3">No skills yet.</p>}
-              <button
+              <motion.button
                 onClick={() => onAddSkill(category.id)}
-                className="w-full mt-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-dashed border-zinc-700/50 text-slate-400 dark:text-zinc-500 hover:text-zinc-300 hover:border-zinc-600 transition-colors text-xs"
+                whileTap={{ scale: 0.98 }}
+                className="w-full mt-2.5 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-dashed border-slate-300 dark:border-zinc-700 text-[#64748B] dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200 hover:border-blue-500/50 hover:bg-slate-50 dark:hover:bg-zinc-800/40 transition-all text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 <Plus className="w-3.5 h-3.5" /> Add Skill to {category.title}
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         )}
