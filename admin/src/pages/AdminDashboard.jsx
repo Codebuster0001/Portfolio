@@ -112,7 +112,7 @@ export default function AdminDashboard({ onLogout }) {
   };
 
   return (
-    <div className="relative flex h-screen bg-[#08080c] overflow-hidden selection:bg-blue-500/30">
+    <div className="relative flex h-screen bg-slate-100 dark:bg-[#08080c] text-slate-900 dark:text-zinc-100 overflow-hidden selection:bg-blue-500/30">
       {/* Background glow effects */}
       <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />

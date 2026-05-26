@@ -1,6 +1,7 @@
 import React from 'react';
-import { Bell, LogOut, Search, Menu } from 'lucide-react';
+import { Bell, LogOut, Search, Menu, Sun, Moon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useTheme } from '@/context/ThemeProvider';
 
 const TAB_TITLES = {
   home: 'Dashboard',
@@ -16,6 +17,8 @@ const TAB_TITLES = {
 
 export default function Navbar({ activeTabTitle, onLogout, onOpenSidebar }) {
   const pageTitle = TAB_TITLES[activeTabTitle] ?? activeTabTitle;
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <header className="h-20 px-4 md:px-8 flex items-center justify-between bg-slate-50 dark:bg-zinc-950/50 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 sticky top-0 z-30">
       <div className="flex items-center gap-4 md:gap-6 flex-1">
@@ -29,6 +32,15 @@ export default function Navbar({ activeTabTitle, onLogout, onOpenSidebar }) {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
+        {/* Theme Toggle Button */}
+        <button 
+          onClick={toggleTheme} 
+          className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-white/5 text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all duration-300"
+          title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
+        >
+          {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5 text-amber-400" />}
+        </button>
+
         <button className="relative p-2 rounded-full hover:bg-white/5 text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white transition-colors">
           <Bell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,1)]" />
@@ -50,3 +62,4 @@ export default function Navbar({ activeTabTitle, onLogout, onOpenSidebar }) {
     </header>
   );
 }
+
