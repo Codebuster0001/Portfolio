@@ -40,6 +40,9 @@ namespace PortfolioBakend.Services
             var extension = Path.GetExtension(file.FileName).ToLower();
             var contentType = file.ContentType.ToLower();
 
+            // Append unique Guid tag to filename to prevent browser and CDN caching of modified documents/images
+            var uniqueFileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}_{Guid.NewGuid().ToString().Substring(0, 8)}{extension}";
+
             var isImage = contentType.StartsWith("image/") || 
                           extension == ".svg" || 
                           extension == ".png" || 
@@ -50,7 +53,7 @@ namespace PortfolioBakend.Services
                           extension == ".bmp";
             var isVideo = contentType.StartsWith("video/") || extension == ".mp4" || extension == ".mov" || extension == ".avi" || extension == ".mkv";
 
-            Console.WriteLine($"[DIAGNOSTICS] Uploading Asset - Name: '{file.FileName}', ContentType: '{file.ContentType}', isImage: {isImage}, isVideo: {isVideo}");
+            Console.WriteLine($"[DIAGNOSTICS] Uploading Asset - Name: '{file.FileName}', UniqueName: '{uniqueFileName}', ContentType: '{file.ContentType}', isImage: {isImage}, isVideo: {isVideo}");
 
             try
             {
@@ -59,7 +62,7 @@ namespace PortfolioBakend.Services
                     // Images go under /image/upload/
                     var uploadParams = new ImageUploadParams
                     {
-                        File = new FileDescription(file.FileName, stream),
+                        File = new FileDescription(uniqueFileName, stream),
                         Folder = folderName
                     };
 
@@ -82,7 +85,7 @@ namespace PortfolioBakend.Services
                     // Videos go under /video/upload/
                     var uploadParams = new VideoUploadParams
                     {
-                        File = new FileDescription(file.FileName, stream),
+                        File = new FileDescription(uniqueFileName, stream),
                         Folder = folderName
                     };
 
@@ -100,7 +103,7 @@ namespace PortfolioBakend.Services
                     // PDFs and other raw files (docx, zip, txt, mp3) go under /raw/upload/
                     var uploadParams = new RawUploadParams
                     {
-                        File = new FileDescription(file.FileName, stream),
+                        File = new FileDescription(uniqueFileName, stream),
                         Folder = folderName
                     };
 
